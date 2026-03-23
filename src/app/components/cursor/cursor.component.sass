@@ -1,0 +1,43 @@
+$forest: #1E3A2F
+$terracotta: #B8705A
+$ease-organic: cubic-bezier(0.25, 0.46, 0.45, 0.94)
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+
+.cursor
+  width: 12px
+  height: 12px
+  background: $forest
+  border-radius: 50%
+  position: fixed
+  top: 0
+  left: 0
+  pointer-events: none
+  z-index: 9999
+  transform: translate(-50%, -50%)
+  transition: width 0.3s $ease-spring, height 0.3s $ease-spring, background 0.3s
+  mix-blend-mode: multiply
+
+  &.hovered
+    width: 8px
+    height: 8px
+    background: $terracotta
+
+.cursor-ring
+  width: 36px
+  height: 36px
+  border: 1.5px solid $forest
+  border-radius: 50%
+  position: fixed
+  top: 0
+  left: 0
+  pointer-events: none
+  z-index: 9998
+  transform: translate(-50%, -50%)
+  transition: width 0.4s $ease-spring, height 0.4s $ease-spring, border-color 0.3s
+  opacity: 0.6
+
+  &.hovered
+    width: 56px
+    height: 56px
+    border-color: $terracotta
+    opacity: 0.4

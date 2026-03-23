@@ -1,0 +1,59 @@
+$forest: #1E3A2F
+$cream: #F7F2EA
+$sage-light: #8FAF96
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-body: 'Jost', sans-serif
+
+.loader
+  position: fixed
+  inset: 0
+  background: $forest
+  z-index: 9000
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  gap: 24px
+  transition: opacity 0.8s $ease-smooth, visibility 0.8s
+
+  &.done
+    opacity: 0
+    visibility: hidden
+
+.loader-word
+  font-family: $font-display
+  font-size: clamp(48px, 8vw, 96px)
+  font-weight: 300
+  color: $cream
+  letter-spacing: 0.3em
+  opacity: 0
+  transform: translateY(30px)
+  animation: loader-word-in 1s $ease-smooth 0.3s forwards
+
+.loader-line
+  width: 0
+  height: 1px
+  background: $sage-light
+  animation: loader-line-grow 1.2s $ease-smooth 0.8s forwards
+
+.loader-sub
+  font-family: $font-body
+  font-size: 11px
+  font-weight: 300
+  letter-spacing: 0.4em
+  color: $sage-light
+  text-transform: uppercase
+  opacity: 0
+  animation: loader-word-in 0.8s $ease-smooth 1.4s forwards
+
+@keyframes loader-word-in
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes loader-line-grow
+  from
+    width: 0
+  to
+    width: 180px

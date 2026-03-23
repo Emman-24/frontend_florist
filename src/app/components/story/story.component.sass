@@ -1,0 +1,152 @@
+$forest: #1E3A2F
+$terracotta: #B8705A
+$cream: #F7F2EA
+$ivory: #EDE7DA
+$linen: #DDD3C3
+$text-mid: #4A4740
+$text-light: #8A857C
+$sage: #5C7A65
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-italic: 'Playfair Display', Georgia, serif
+$font-body: 'Jost', sans-serif
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+
+.story-section
+  padding: 120px 48px
+  background: $ivory
+
+  @media (max-width: 768px)
+    padding: 80px 24px
+
+.story-inner
+  max-width: 1280px
+  margin: 0 auto
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 80px
+  align-items: center
+
+  @media (max-width: 1024px)
+    grid-template-columns: 1fr
+    gap: 48px
+
+.story-eyebrow
+  font-size: 10px
+  font-weight: 400
+  letter-spacing: 0.35em
+  text-transform: uppercase
+  color: $terracotta
+  margin-bottom: 20px
+  display: flex
+  align-items: center
+  gap: 10px
+
+  &::before
+    content: ''
+    width: 20px
+    height: 1px
+    background: $terracotta
+
+.story-title
+  font-family: $font-display
+  font-size: clamp(36px, 4vw, 52px)
+  font-weight: 300
+  color: $forest
+  line-height: 1.15
+  margin-bottom: 28px
+
+  em
+    font-style: italic
+    color: $terracotta
+    font-family: $font-italic
+
+.story-body
+  font-size: 15px
+  font-weight: 300
+  line-height: 1.8
+  color: $text-mid
+  margin-bottom: 48px
+
+.story-stats
+  display: flex
+  gap: 40px
+
+  @media (max-width: 480px)
+    gap: 24px
+
+.stat-item
+  border-left: 1px solid $linen
+  padding-left: 20px
+
+.stat-num
+  font-family: $font-display
+  font-size: 40px
+  font-weight: 300
+  color: $forest
+  line-height: 1
+
+  span
+    font-size: 0.6em
+    color: $terracotta
+
+.stat-label
+  font-size: 11px
+  font-weight: 300
+  letter-spacing: 0.1em
+  color: $text-light
+  text-transform: uppercase
+  margin-top: 4px
+
+// Visual panel
+.story-visual
+  position: relative
+
+.story-img-main
+  border-radius: 40px
+  overflow: hidden
+  aspect-ratio: 4/5
+  position: relative
+
+.story-flower-bg
+  width: 100%
+  height: 100%
+  background: radial-gradient(ellipse at 40% 35%, rgba(184,112,90,0.25) 0%, transparent 55%), linear-gradient(150deg, #c8d8b8 0%, #9ab87a 30%, #6a9848 60%, #2d5040 100%)
+
+.story-svg
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+  opacity: 0.5
+
+.story-img-badge
+  position: absolute
+  bottom: -24px
+  right: -24px
+  width: 100px
+  height: 100px
+  background: $terracotta
+  border-radius: 50%
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  box-shadow: 0 16px 48px rgba($forest, 0.2)
+
+  @media (max-width: 1024px)
+    right: 0
+    bottom: 0
+
+.story-badge-year
+  font-family: $font-display
+  font-size: 22px
+  font-weight: 300
+  color: $cream
+  line-height: 1
+
+.story-badge-label
+  font-size: 10px
+  font-weight: 300
+  letter-spacing: 0.15em
+  color: rgba($cream, 0.7)
+  text-transform: uppercase

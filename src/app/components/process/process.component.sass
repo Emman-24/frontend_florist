@@ -1,0 +1,66 @@
+$forest: #1E3A2F
+$ivory: #EDE7DA
+$linen: #DDD3C3
+$terracotta: #B8705A
+$text-mid: #4A4740
+$text-light: #8A857C
+$sage: #5C7A65
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-body: 'Jost', sans-serif
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+
+.process-section
+  padding: 120px 48px
+  max-width: 1280px
+  margin: 0 auto
+
+  @media (max-width: 768px)
+    padding: 80px 24px
+
+.process-grid
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  gap: 32px
+
+  @media (max-width: 1024px)
+    grid-template-columns: repeat(2, 1fr)
+  @media (max-width: 768px)
+    grid-template-columns: 1fr
+
+.process-card
+  padding: 40px 32px
+  background: $ivory
+  border-radius: 24px
+  border: 1px solid transparent
+  transition: border-color 0.3s $ease-smooth, transform 0.4s $ease-smooth, box-shadow 0.4s
+
+  &:hover
+    border-color: rgba($forest, 0.15)
+    transform: translateY(-6px)
+    box-shadow: 0 20px 56px rgba($forest, 0.12)
+
+.process-num
+  font-family: $font-display
+  font-size: 48px
+  font-weight: 300
+  color: $linen
+  line-height: 1
+  margin-bottom: 24px
+
+.process-icon
+  font-size: 28px
+  margin-bottom: 20px
+
+.process-title
+  font-family: $font-display
+  font-size: 22px
+  font-weight: 300
+  color: $forest
+  margin-bottom: 14px
+
+.process-desc
+  font-size: 14px
+  font-weight: 300
+  line-height: 1.7
+  color: $text-mid

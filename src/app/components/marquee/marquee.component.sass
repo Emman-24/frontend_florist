@@ -1,0 +1,45 @@
+$forest: #1E3A2F
+$cream: #F7F2EA
+$terracotta: #B8705A
+$font-display: 'Cormorant Garamond', Georgia, serif
+
+.marquee-section
+  background: $forest
+  padding: 18px 0
+  overflow: hidden
+  position: relative
+
+.marquee-track
+  display: flex
+  gap: 0
+  animation: marquee-scroll 30s linear infinite
+  width: max-content
+
+.marquee-item
+  display: flex
+  align-items: center
+  gap: 32px
+  padding: 0 32px
+  flex-shrink: 0
+
+.marquee-text
+  font-family: $font-display
+  font-size: 16px
+  font-weight: 300
+  letter-spacing: 0.15em
+  color: $cream
+  white-space: nowrap
+  font-style: italic
+
+.marquee-dot
+  width: 4px
+  height: 4px
+  border-radius: 50%
+  background: $terracotta
+  flex-shrink: 0
+
+@keyframes marquee-scroll
+  from
+    transform: translateX(0)
+  to
+    transform: translateX(-50%)

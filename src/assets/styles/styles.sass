@@ -1,0 +1,359 @@
+// =========================================
+//   GLOBAL STYLES — FLEUR BOTANICAL ATELIER
+// =========================================
+
+@use 'sass:math'
+
+// ---- Google Fonts already loaded in index.html ----
+
+// =========================================
+//   CSS CUSTOM PROPERTIES (kept for runtime JS refs)
+// =========================================
+:root
+  --cream:       #F7F2EA
+  --ivory:       #EDE7DA
+  --linen:       #DDD3C3
+  --forest:      #1E3A2F
+  --moss:        #2D5040
+  --sage:        #5C7A65
+  --sage-light:  #8FAF96
+  --terracotta:  #B8705A
+  --blush:       #D9A89C
+  --rose-dust:   #C4887A
+  --amber:       #C9966A
+  --bark:        #6B4E3D
+  --charcoal:    #1A1A18
+  --white:       #FDFAF5
+  --text-dark:   #1A1A18
+  --text-mid:    #4A4740
+  --text-light:  #8A857C
+
+  --font-display: 'Cormorant Garamond', Georgia, serif
+  --font-italic:  'Playfair Display', Georgia, serif
+  --font-body:    'Jost', sans-serif
+
+  --ease-organic: cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1)
+  --ease-smooth:  cubic-bezier(0.16, 1, 0.3, 1)
+
+  --r-sm: 4px
+  --r-md: 12px
+  --r-lg: 24px
+  --r-xl: 40px
+  --r-pill: 999px
+
+// =========================================
+//   SASS VARIABLES
+// =========================================
+$cream:       #F7F2EA
+$ivory:       #EDE7DA
+$linen:       #DDD3C3
+$forest:      #1E3A2F
+$moss:        #2D5040
+$sage:        #5C7A65
+$sage-light:  #8FAF96
+$terracotta:  #B8705A
+$blush:       #D9A89C
+$rose-dust:   #C4887A
+$amber:       #C9966A
+$bark:        #6B4E3D
+$charcoal:    #1A1A18
+$white:       #FDFAF5
+$text-dark:   #1A1A18
+$text-mid:    #4A4740
+$text-light:  #8A857C
+
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-italic:  'Playfair Display', Georgia, serif
+$font-body:    'Jost', sans-serif
+
+$ease-organic: cubic-bezier(0.25, 0.46, 0.45, 0.94)
+$ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1)
+$ease-smooth:  cubic-bezier(0.16, 1, 0.3, 1)
+
+// =========================================
+//   RESET & BASE
+// =========================================
+*, *::before, *::after
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+html
+  scroll-behavior: smooth
+  font-size: 16px
+
+body
+  font-family: $font-body
+  background: $cream
+  color: $text-dark
+  overflow-x: hidden
+  cursor: none
+
+img
+  display: block
+  width: 100%
+
+a
+  text-decoration: none
+  color: inherit
+
+button
+  cursor: none
+  border: none
+  background: none
+  font-family: inherit
+
+ul
+  list-style: none
+
+::selection
+  background: $sage-light
+  color: $white
+
+// =========================================
+//   FLOWER BACKGROUND CLASSES (shared)
+// =========================================
+.flower-roses
+  background: linear-gradient(135deg, #d4a5a5 0%, #c4887a 40%, #a86458 80%, #7a3d30 100%)
+
+.flower-peonies
+  background: linear-gradient(135deg, #e8cdd0 0%, #d4a5b0 40%, #b87a88 70%, #8a4a5a 100%)
+
+.flower-tulips
+  background: linear-gradient(160deg, #f0c040 0%, #e8a020 40%, #c87830 70%, #a05020 100%)
+
+.flower-orchids
+  background: linear-gradient(135deg, #d0b8d8 0%, #b890c8 40%, #9060a8 70%, #602080 100%)
+
+.flower-sunflowers
+  background: linear-gradient(135deg, #f8d060 0%, #e8a818 40%, #c87820 70%, #8a4808 100%)
+
+.flower-lavender
+  background: linear-gradient(135deg, #c8c0e0 0%, #a890cc 40%, #8060a8 70%, #503878 100%)
+
+.flower-lilies
+  background: linear-gradient(135deg, #f0e8d8 0%, #e0c8a8 40%, #c8a070 70%, #a07040 100%)
+
+.flower-dahlia
+  background: linear-gradient(135deg, #f0b8a8 0%, #e08870 40%, #c85840 70%, #903020 100%)
+
+.flower-hydrangea
+  background: linear-gradient(135deg, #b8d0e8 0%, #88b0d0 40%, #5888b8 70%, #304870 100%)
+
+.flower-chrysanthemum
+  background: linear-gradient(135deg, #e8f0c8 0%, #c8d890 40%, #a0b858 70%, #608020 100%)
+
+.flower-garden
+  background: linear-gradient(135deg, #c8d8b8 0%, #9ab87a 30%, #6a9848 60%, #3a6820 100%)
+
+.flower-wild
+  background: linear-gradient(160deg, #d0c8b0 0%, #b0a078 30%, #887840 60%, #504820 100%)
+
+.flower-blush-combo
+  background: linear-gradient(135deg, #f0d8d0 0%, #e0b8b0 40%, #c89080 70%, #a06858 100%)
+
+// =========================================
+//   SECTION SHARED STYLES
+// =========================================
+section
+  position: relative
+
+.section-header
+  text-align: center
+  margin-bottom: 72px
+
+.section-eyebrow
+  display: inline-flex
+  align-items: center
+  gap: 14px
+  font-size: 10px
+  font-weight: 400
+  letter-spacing: 0.35em
+  text-transform: uppercase
+  color: $terracotta
+  margin-bottom: 20px
+
+  &::before, &::after
+    content: ''
+    display: block
+    width: 24px
+    height: 1px
+    background: $terracotta
+
+.section-title
+  font-family: $font-display
+  font-size: clamp(36px, 4vw, 56px)
+  font-weight: 300
+  color: $forest
+  line-height: 1.15
+
+  em
+    font-style: italic
+    color: $terracotta
+    font-family: $font-italic
+
+.section-subtitle
+  font-size: 15px
+  font-weight: 300
+  color: $text-mid
+  line-height: 1.7
+  max-width: 480px
+  margin: 20px auto 0
+
+// =========================================
+//   REVEAL ANIMATIONS
+// =========================================
+.reveal
+  opacity: 0
+  transform: translateY(40px)
+  transition: opacity 0.9s $ease-smooth, transform 0.9s $ease-smooth
+
+  &.visible
+    opacity: 1
+    transform: translateY(0)
+
+.reveal-delay-1
+  transition-delay: 0.1s
+
+.reveal-delay-2
+  transition-delay: 0.2s
+
+.reveal-delay-3
+  transition-delay: 0.3s
+
+.reveal-delay-4
+  transition-delay: 0.4s
+
+.reveal-delay-5
+  transition-delay: 0.5s
+
+.reveal-left
+  opacity: 0
+  transform: translateX(-40px)
+  transition: opacity 0.9s $ease-smooth, transform 0.9s $ease-smooth
+
+  &.visible
+    opacity: 1
+    transform: translateX(0)
+
+.reveal-right
+  opacity: 0
+  transform: translateX(40px)
+  transition: opacity 0.9s $ease-smooth, transform 0.9s $ease-smooth
+
+  &.visible
+    opacity: 1
+    transform: translateX(0)
+
+@keyframes fade-up
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes word-reveal
+  to
+    opacity: 1
+    transform: translateY(0)
+
+// =========================================
+//   BUTTON SHARED STYLES
+// =========================================
+.btn-primary
+  background: $forest
+  color: $cream
+  padding: 16px 40px
+  border-radius: var(--r-pill)
+  font-size: 12px
+  font-weight: 400
+  letter-spacing: 0.18em
+  text-transform: uppercase
+  transition: background 0.3s, transform 0.25s $ease-spring, box-shadow 0.3s
+  position: relative
+  overflow: hidden
+  display: inline-flex
+  align-items: center
+  gap: 10px
+
+  &::before
+    content: ''
+    position: absolute
+    inset: 0
+    background: $terracotta
+    transform: translateX(-100%)
+    transition: transform 0.5s $ease-smooth
+    border-radius: inherit
+
+  &:hover
+    transform: translateY(-2px)
+    box-shadow: 0 12px 32px rgba($forest, 0.25)
+
+    &::before
+      transform: translateX(0)
+
+  span
+    position: relative
+    z-index: 1
+
+.btn-ghost
+  display: flex
+  align-items: center
+  gap: 10px
+  font-size: 13px
+  font-weight: 300
+  color: $text-mid
+  transition: color 0.3s
+  background: none
+  border: none
+  cursor: none
+
+  &:hover
+    color: $forest
+
+    .arrow
+      border-color: $forest
+      background: $forest
+      color: $cream
+      transform: translateX(4px)
+
+  .arrow
+    width: 32px
+    height: 32px
+    border: 1px solid $linen
+    border-radius: 50%
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 14px
+    transition: border-color 0.3s, transform 0.3s $ease-spring, background 0.3s
+
+// =========================================
+//   PAGE TRANSITION
+// =========================================
+.page-transition
+  position: fixed
+  inset: 0
+  background: $forest
+  z-index: 8000
+  transform: translateY(100%)
+  transition: transform 0.6s $ease-smooth
+  pointer-events: none
+
+  &.enter
+    transform: translateY(0)
+
+  &.exit
+    transform: translateY(-100%)
+
+// =========================================
+//   UTILITIES
+// =========================================
+.overflow-hidden
+  overflow: hidden
+
+.sr-only
+  position: absolute
+  width: 1px
+  height: 1px
+  overflow: hidden
+  clip: rect(0,0,0,0)

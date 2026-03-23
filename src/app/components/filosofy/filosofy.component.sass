@@ -1,0 +1,98 @@
+$forest: #1E3A2F
+$moss: #2D5040
+$sage: #5C7A65
+$sage-light: #8FAF96
+$cream: #F7F2EA
+$ivory: #EDE7DA
+$linen: #DDD3C3
+$terracotta: #B8705A
+$text-light: #8A857C
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-body: 'Jost', sans-serif
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+
+.filosofia
+  padding: 100px 52px
+  background: $forest
+  overflow: hidden
+  position: relative
+
+.filo-deco
+  position: absolute
+  right: -80px
+  top: -80px
+  width: 400px
+  height: 400px
+  border-radius: 50%
+  border: 1px solid rgba(160, 188, 148, .12)
+
+.filo-deco2
+  position: absolute
+  left: -60px
+  bottom: -100px
+  width: 300px
+  height: 300px
+  border-radius: 50%
+  border: 1px solid rgba(160, 188, 148, .1)
+
+.filo-inner
+  max-width: 1000px
+  margin: 0 auto
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: 80px
+  align-items: center
+
+
+.filo-comilla
+  font-family: $font-body
+  font-size: 100px
+  color: rgba(201, 110, 110, .4)
+  line-height: .8
+  margin-bottom: 20px
+  font-style: italic
+
+.filo-texto
+  font-family: $font-display
+  font-style: italic
+  font-size: clamp(18px, 2.2vw, 26px)
+  color: $cream
+  line-height: 1.65
+  margin-bottom: 28px
+
+.filo-firma
+  font-size: 12px
+  font-weight: 300
+  letter-spacing: .25em
+  text-transform: uppercase
+  color: $sage-light
+
+.filo-der
+  display: flex
+  flex-direction: column
+  gap: 28px
+
+.filo-stat
+  padding: 28px
+  background: rgba(250, 246, 240, .06)
+  border-radius: var(--r-lg)
+  border: 1px solid rgba(250, 246, 240, .08)
+
+.filo-stat-num
+  font-family: $font-display
+  font-size: 44px
+  color: $cream
+  line-height: 1
+  margin-bottom: 4px
+
+  sup
+    color: var(--rosa-suave)
+    font-size: .55em
+
+.filo-stat-label
+  font-size: 11px
+  font-weight: 300
+  letter-spacing: .15em
+  text-transform: uppercase
+  color: rgba(250, 246, 240, .45)

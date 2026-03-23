@@ -1,0 +1,259 @@
+$forest: #1E3A2F
+$ivory: #EDE7DA
+$cream: #F7F2EA
+$linen: #DDD3C3
+$terracotta: #B8705A
+$sage: #5C7A65
+$amber: #C9966A
+$text-mid: #4A4740
+$text-light: #8A857C
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-italic: 'Playfair Display', Georgia, serif
+$font-body: 'Jost', sans-serif
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+
+.products-page
+  padding: 140px 48px 100px
+  max-width: 1440px
+  margin: 0 auto
+
+  @media (max-width: 1024px)
+    padding: 120px 32px 80px
+  @media (max-width: 768px)
+    padding: 100px 24px 64px
+
+.products-header
+  display: flex
+  align-items: flex-end
+  justify-content: space-between
+  margin-bottom: 56px
+  flex-wrap: wrap
+  gap: 24px
+
+  @media (max-width: 768px)
+    flex-direction: column
+    align-items: flex-start
+
+.products-eyebrow
+  font-size: 10px
+  font-weight: 400
+  letter-spacing: 0.35em
+  text-transform: uppercase
+  color: $terracotta
+  margin-bottom: 12px
+  display: flex
+  align-items: center
+  gap: 10px
+
+  &::before
+    content: ''
+    width: 20px
+    height: 1px
+    background: $terracotta
+
+.products-page-title
+  font-family: $font-display
+  font-size: clamp(40px, 5vw, 68px)
+  font-weight: 300
+  color: $forest
+  line-height: 1.05
+
+  em
+    font-style: italic
+    color: $terracotta
+    font-family: $font-italic
+
+.products-count
+  font-size: 13px
+  font-weight: 300
+  color: $text-light
+  margin-top: 8px
+
+.filter-bar
+  display: flex
+  gap: 10px
+  flex-wrap: wrap
+
+  @media (max-width: 768px)
+    flex-wrap: wrap
+
+.filter-btn
+  display: flex
+  align-items: center
+  gap: 8px
+  padding: 10px 20px
+  border: 1px solid $linen
+  border-radius: 999px
+  font-size: 12px
+  font-weight: 400
+  letter-spacing: 0.1em
+  text-transform: uppercase
+  color: $text-mid
+  background: transparent
+  cursor: none
+  transition: all 0.3s $ease-smooth
+
+  &:hover,
+  &.active
+    background: $forest
+    border-color: $forest
+    color: $cream
+
+.products-grid
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  gap: 24px
+
+  @media (max-width: 1200px)
+    grid-template-columns: repeat(3, 1fr)
+  @media (max-width: 768px)
+    grid-template-columns: repeat(2, 1fr)
+    gap: 16px
+  @media (max-width: 480px)
+    grid-template-columns: 1fr
+
+.product-card
+  background: $ivory
+  border-radius: 40px
+  overflow: hidden
+  position: relative
+  cursor: none
+  transition: transform 0.5s $ease-smooth, box-shadow 0.5s $ease-smooth
+
+  &:hover
+    transform: translateY(-8px)
+    box-shadow: 0 28px 72px rgba($forest, 0.18)
+
+    .product-card-flower
+      transform: scale(1.06)
+    .product-quick-add
+      opacity: 1
+      transform: translateY(0)
+
+.product-card-media
+  aspect-ratio: 3/4
+  position: relative
+  overflow: hidden
+
+.product-card-flower
+  width: 100%
+  height: 100%
+  transition: transform 0.7s $ease-smooth
+
+.product-badge
+  position: absolute
+  top: 16px
+  left: 16px
+  background: $cream
+  border-radius: 999px
+  padding: 5px 12px
+  font-size: 10px
+  font-weight: 400
+  letter-spacing: 0.1em
+  text-transform: uppercase
+  color: $forest
+
+  &.new
+    background: $forest
+    color: $cream
+  &.sale
+    background: $terracotta
+    color: $cream
+
+.product-quick-add
+  position: absolute
+  bottom: 16px
+  left: 16px
+  right: 16px
+  background: rgba(247, 242, 234, 0.95)
+  backdrop-filter: blur(8px)
+  border-radius: 24px
+  padding: 12px 16px
+  display: flex
+  align-items: center
+  justify-content: space-between
+  opacity: 0
+  transform: translateY(12px)
+  transition: opacity 0.4s $ease-smooth, transform 0.4s $ease-smooth
+
+.quick-add-text
+  font-size: 11px
+  font-weight: 400
+  letter-spacing: 0.1em
+  text-transform: uppercase
+  color: $forest
+
+.quick-add-icon
+  width: 28px
+  height: 28px
+  background: $forest
+  border-radius: 50%
+  display: flex
+  align-items: center
+  justify-content: center
+  color: $cream
+  font-size: 18px
+  cursor: none
+  transition: background 0.3s, transform 0.3s $ease-spring
+
+  &:hover
+    background: $terracotta
+    transform: rotate(90deg)
+
+.product-card-body
+  padding: 20px 24px 24px
+
+.product-card-category
+  font-size: 10px
+  font-weight: 400
+  letter-spacing: 0.2em
+  text-transform: uppercase
+  color: $sage
+  margin-bottom: 6px
+
+.product-card-name
+  font-family: $font-display
+  font-size: 20px
+  font-weight: 300
+  color: $forest
+  margin-bottom: 8px
+  line-height: 1.2
+
+.product-card-desc
+  font-size: 12px
+  font-weight: 300
+  color: $text-light
+  line-height: 1.6
+  margin-bottom: 16px
+
+.product-card-footer
+  display: flex
+  align-items: center
+  justify-content: space-between
+
+.product-price
+  font-family: $font-display
+  font-size: 22px
+  font-weight: 300
+  color: $forest
+
+.product-price-old
+  font-size: 14px
+  font-weight: 300
+  color: $text-light
+  text-decoration: line-through
+  margin-right: 6px
+
+.product-rating
+  display: flex
+  align-items: center
+  gap: 4px
+  font-size: 11px
+  font-weight: 400
+  color: $amber
+
+.product-rating-count
+  color: $text-light
+  font-size: 11px
+  font-weight: 300

@@ -1,0 +1,220 @@
+$forest: #1E3A2F
+$moss: #2D5040
+$terracotta: #B8705A
+$cream: #F7F2EA
+$linen: #DDD3C3
+$text-mid: #4A4740
+$sage-light: #8FAF96
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-body: 'Jost', sans-serif
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+
+nav
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  z-index: 100
+  padding: 24px 48px
+  display: flex
+  align-items: center
+  justify-content: space-between
+  transition: padding 0.4s $ease-smooth, background 0.4s
+
+  &.scrolled
+    padding: 16px 48px
+    background: rgba(247, 242, 234, 0.92)
+    backdrop-filter: blur(16px)
+    border-bottom: 1px solid rgba(92, 122, 101, 0.15)
+
+  @media (max-width: 768px)
+    padding: 16px 24px
+    &.scrolled
+      padding: 12px 24px
+
+  @media (max-width: 1024px)
+    padding: 20px 32px
+
+.nav-logo
+  font-family: $font-display
+  font-size: 24px
+  font-weight: 300
+  letter-spacing: 0.25em
+  color: $forest
+  text-transform: uppercase
+  cursor: none
+
+  span
+    font-style: italic
+    color: $terracotta
+
+.nav-links
+  display: flex
+  gap: 40px
+  align-items: center
+
+  @media (max-width: 768px)
+    display: none
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background: $cream
+    flex-direction: column
+    justify-content: center
+    gap: 32px
+    z-index: 90
+
+    &.open
+      display: flex
+
+.nav-link
+  font-size: 11px
+  font-weight: 400
+  letter-spacing: 0.2em
+  text-transform: uppercase
+  color: $text-mid
+  position: relative
+  transition: color 0.3s
+  cursor: none
+  background: none
+  border: none
+  font-family: $font-body
+  display: flex
+  align-items: center
+  gap: 6px
+
+  &::after
+    content: ''
+    position: absolute
+    bottom: -4px
+    left: 0
+    width: 0
+    height: 1px
+    background: $terracotta
+    transition: width 0.4s $ease-smooth
+
+  &:hover
+    color: $forest
+    &::after
+      width: 100%
+
+  @media (max-width: 768px)
+    font-size: 13px
+
+.basket-btn
+  &::after
+    display: none
+
+.cart-count-badge
+  background: $linen
+  color: $forest
+  border-radius: 999px
+  padding: 2px 7px
+  font-size: 10px
+  font-weight: 500
+  transition: background 0.3s
+
+  &.has-items
+    background: $terracotta
+    color: $cream
+
+.nav-cta
+  background: $forest !important
+  color: $cream !important
+  padding: 10px 24px
+  border-radius: 999px
+  font-size: 11px !important
+  letter-spacing: 0.15em !important
+  font-weight: 400
+  transition: background 0.3s, transform 0.2s $ease-spring !important
+
+  &::after
+    display: none !important
+
+  &:hover
+    background: $moss !important
+    transform: scale(1.03) !important
+
+.nav-menu-toggle
+  display: none
+  flex-direction: column
+  gap: 5px
+  width: 28px
+  padding: 4px 0
+  background: none
+  border: none
+  z-index: 91
+  position: relative
+
+  span
+    display: block
+    height: 1.5px
+    background: $forest
+    transition: transform 0.3s, opacity 0.3s, width 0.3s
+
+    &:nth-child(2)
+      width: 60%
+
+  &.open
+    span:nth-child(1)
+      transform: translateY(6.5px) rotate(45deg)
+    span:nth-child(2)
+      opacity: 0
+    span:nth-child(3)
+      transform: translateY(-6.5px) rotate(-45deg)
+
+  @media (max-width: 768px)
+    display: flex
+
+.nav-item-dropdown
+  position: relative
+  list-style: none
+
+.dropdown-trigger
+  .chevron
+    transition: transform 0.3s $ease-smooth
+
+.dropdown-panel
+  display: none
+  position: absolute
+  top: 100%
+  left: 0
+  min-width: 200px
+  padding: 12px 0
+  background: rgba(247, 242, 234, 0.96)
+  backdrop-filter: blur(16px)
+  border: 1px solid rgba(92, 122, 101, 0.12)
+  border-radius: 8px
+  box-shadow: 0 8px 24px rgba(30, 58, 47, 0.08)
+  list-style: none
+  z-index: 110
+
+  &.visible
+    display: block
+
+.dropdown-item
+  display: block
+  padding: 8px 20px
+  font-family: $font-body
+  font-size: 11px
+  font-weight: 400
+  letter-spacing: 0.15em
+  text-transform: uppercase
+  color: $text-mid
+  transition: color 0.2s, background 0.2s
+  white-space: nowrap
+  cursor: none
+
+  &:hover
+    color: $forest
+    background: rgba(143, 175, 150, 0.1)
+
+  &--all
+    color: $terracotta
+    font-weight: 500
+    border-bottom: 1px solid rgba(92, 122, 101, 0.1)
+    margin-bottom: 4px
+    padding-bottom: 12px

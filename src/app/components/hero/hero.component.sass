@@ -1,0 +1,269 @@
+$forest: #1E3A2F
+$terracotta: #B8705A
+$cream: #F7F2EA
+$linen: #DDD3C3
+$text-mid: #4A4740
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-italic: 'Playfair Display', Georgia, serif
+$font-body: 'Jost', sans-serif
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+
+.hero
+  min-height: 100vh
+  display: grid
+  grid-template-columns: 1fr 1fr
+  position: relative
+  overflow: hidden
+
+  @media (max-width: 1024px)
+    grid-template-columns: 1fr
+    min-height: auto
+
+// ---- LEFT PANEL ----
+.hero-left
+  display: flex
+  flex-direction: column
+  justify-content: flex-end
+  padding: 120px 64px 80px
+  position: relative
+  z-index: 2
+
+  @media (max-width: 1024px)
+    padding: 100px 32px 60px
+  @media (max-width: 768px)
+    padding: 90px 24px 48px
+
+.hero-eyebrow
+  display: flex
+  align-items: center
+  gap: 16px
+  margin-bottom: 32px
+  opacity: 0
+  transform: translateY(20px)
+  animation: fade-up 0.8s $ease-smooth 2s forwards
+
+.hero-eyebrow-line
+  width: 40px
+  height: 1px
+  background: $terracotta
+
+.hero-eyebrow-text
+  font-size: 11px
+  font-weight: 400
+  letter-spacing: 0.3em
+  text-transform: uppercase
+  color: $terracotta
+
+.hero-title
+  font-family: $font-display
+  font-size: clamp(52px, 6vw, 88px)
+  font-weight: 300
+  line-height: 1.0
+  color: $forest
+  margin-bottom: 32px
+
+.hero-title-line
+  display: block
+  overflow: hidden
+
+.hero-title-word
+  display: inline-block
+  opacity: 0
+  transform: translateY(100%)
+  animation: word-reveal 0.9s $ease-smooth forwards
+
+  .hero-title-line:nth-child(1) &
+    animation-delay: 2.1s
+  .hero-title-line:nth-child(2) &
+    animation-delay: 2.25s
+  .hero-title-line:nth-child(3) &
+    animation-delay: 2.4s
+
+  em
+    font-style: italic
+    color: $terracotta
+    font-family: $font-italic
+
+.hero-desc
+  font-size: 15px
+  font-weight: 300
+  line-height: 1.8
+  color: $text-mid
+  max-width: 380px
+  margin-bottom: 48px
+  opacity: 0
+  animation: fade-up 0.8s $ease-smooth 2.6s forwards
+
+.hero-actions
+  display: flex
+  align-items: center
+  gap: 32px
+  opacity: 0
+  animation: fade-up 0.8s $ease-smooth 2.8s forwards
+
+// ---- RIGHT PANEL ----
+.hero-right
+  position: relative
+  overflow: hidden
+
+  @media (max-width: 1024px)
+    height: 50vh
+
+.hero-image-wrap
+  position: absolute
+  inset: 0
+  transform: scale(1.08)
+  animation: hero-zoom 1.5s $ease-smooth 1.8s forwards
+
+@keyframes hero-zoom
+  to
+    transform: scale(1)
+
+.hero-flower-art
+  width: 100%
+  height: 100%
+  background: radial-gradient(ellipse at 60% 40%, rgba(184, 112, 90, 0.3) 0%, transparent 60%), radial-gradient(ellipse at 30% 70%, rgba(196, 136, 122, 0.2) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(92, 122, 101, 0.4) 0%, transparent 40%), linear-gradient(160deg, #c5d5be 0%, #8faf96 25%, #5c7a65 55%, #2d5040 85%, #1e3a2f 100%)
+  position: relative
+
+.hero-svg
+  position: absolute
+  inset: 0
+  width: 100%
+  height: 100%
+  opacity: 0.5
+
+// Floating petals
+.petal
+  position: absolute
+  border-radius: 50% 0 50% 0
+  opacity: 0
+  animation: petal-float linear infinite
+
+  &-1
+    width: 18px
+    height: 12px
+    background: rgba(255,255,255,0.3)
+    top: 80%
+    left: 20%
+    animation-duration: 8s
+    animation-delay: 3.5s
+  &-2
+    width: 12px
+    height: 8px
+    background: rgba(184,112,90,0.4)
+    top: 60%
+    left: 70%
+    animation-duration: 10s
+    animation-delay: 4.5s
+  &-3
+    width: 20px
+    height: 14px
+    background: rgba(255,255,255,0.2)
+    top: 90%
+    left: 50%
+    animation-duration: 7s
+    animation-delay: 5s
+  &-4
+    width: 10px
+    height: 7px
+    background: rgba(184,112,90,0.3)
+    top: 70%
+    left: 35%
+    animation-duration: 11s
+    animation-delay: 2s
+
+@keyframes petal-float
+  0%
+    transform: translateY(0) rotate(0deg) translateX(0)
+    opacity: 0
+  10%
+    opacity: 0.12
+  90%
+    opacity: 0.06
+  100%
+    transform: translateY(-100vh) rotate(360deg) translateX(30px)
+    opacity: 0
+
+// Float Badge
+.hero-float-badge
+  position: absolute
+  bottom: 60px
+  left: -28px
+  background: $cream
+  border-radius: 24px
+  padding: 20px 24px
+  box-shadow: 0 20px 60px rgba($forest, 0.15)
+  z-index: 3
+  opacity: 0
+  transform: translateX(-20px)
+  animation: fade-up 0.8s $ease-smooth 3s forwards
+
+  @media (max-width: 1024px)
+    left: 24px
+    bottom: 24px
+
+.hero-float-badge-num
+  font-family: $font-display
+  font-size: 36px
+  font-weight: 300
+  color: $forest
+  line-height: 1
+
+  span
+    font-size: 0.7em
+
+.hero-float-badge-label
+  font-size: 11px
+  font-weight: 300
+  letter-spacing: 0.15em
+  color: #8A857C
+  text-transform: uppercase
+  margin-top: 4px
+
+// Scroll indicator
+.hero-scroll
+  position: absolute
+  bottom: 32px
+  left: 50%
+  transform: translateX(-50%)
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 8px
+  z-index: 3
+  opacity: 0
+  animation: fade-up 0.8s $ease-smooth 3.2s forwards
+
+.hero-scroll-text
+  font-size: 10px
+  font-weight: 300
+  letter-spacing: 0.3em
+  text-transform: uppercase
+  color: $cream
+  writing-mode: vertical-lr
+  transform: rotate(180deg)
+
+.hero-scroll-line
+  width: 1px
+  height: 48px
+  background: linear-gradient(to bottom, $cream, transparent)
+  animation: scroll-pulse 1.5s ease-in-out infinite
+
+@keyframes scroll-pulse
+  0%, 100%
+    opacity: 0.5
+    transform: scaleY(1)
+  50%
+    opacity: 1
+    transform: scaleY(1.2)
+
+@keyframes fade-up
+  to
+    opacity: 1
+    transform: translateY(0) translateX(0)
+
+@keyframes word-reveal
+  to
+    opacity: 1
+    transform: translateY(0)

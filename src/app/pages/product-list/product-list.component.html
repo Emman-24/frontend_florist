@@ -1,0 +1,53 @@
+<div class="app-view">
+  <div class="products-page">
+    <div class="products-header">
+      <div class="products-title-group">
+        <div class="products-eyebrow">{{ pageEyebrow }}</div>
+        <h1 class="products-page-title"><em>{{ pageTitle }}</em></h1>
+        <p class="products-count">{{ totalElements }} productos disponibles</p>
+      </div>
+      <div class="products-controls" *ngIf="subCategories.length > 0">
+        <div class="filter-bar">
+          <a class="filter-btn"
+             [class.active]="isAllActive()"
+             [routerLink]="['/categorias', activeCategory!.slug]">
+            Todos
+          </a>
+          <a class="filter-btn"
+             *ngFor="let sub of subCategories"
+             [class.active]="isActiveSubCategory(sub)"
+             [routerLink]="subCategoryLink(sub)">
+            {{ sub.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="products-grid">
+
+      <div class="product-card" *ngFor="let product of products">
+        <div class="product-card-media">
+          <div class="product-card-flower" *ngIf="!product.primaryImage?.mediumUrl"></div>
+          <img *ngIf="product.primaryImage?.mediumUrl"
+               class="product-card-flower"
+               [src]="product.primaryImage.mediumUrl"
+               [alt]="product.primaryImage.altText || product.name" />
+          <span class="product-badge" *ngIf="product.featured">Destacado</span>
+          <span class="product-badge sale" *ngIf="product.price.hasDiscount">-{{ product.price.discountPercent }}%</span>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-category" *ngIf="product.categories.length > 0">{{ pageTitle}}</div>
+          <div class="product-card-name">{{ product.name }}</div>
+          <p class="product-card-desc" *ngIf="product.price.hasDiscount">{{ product.price.discountPercent }}% de descuento</p>
+          <div class="product-card-footer">
+            <div class="product-price">
+              <span class="product-price-old" *ngIf="product.price.hasDiscount">{{ product.price.amount | currency:product.price.currency }}</span>
+              {{ (product.price.hasDiscount ? product.price.discountAmount : product.price.amount) | currency:product.price.currency }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
