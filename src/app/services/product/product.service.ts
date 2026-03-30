@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../../environments/environment';
-import {ProductPageResponse, ProductSearchParams} from '../../models/product';
+import {ProductDetailResponse, ProductPageResponse, ProductSearchParams} from '../../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +27,9 @@ export class ProductService {
     if (params.maxPrice != null) httpParams = httpParams.set('maxPrice', params.maxPrice.toString());
 
     return this.http.get<ProductPageResponse>(`${environment.apiUrl}/floral-arrangement`, { params: httpParams });
+  }
+
+  getProductBySeoName(seoname:string): Observable<ProductDetailResponse> {
+    return this.http.get<ProductDetailResponse>(`${environment.apiUrl}/floral-arrangement/seo-name/${seoname}`);
   }
 }

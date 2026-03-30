@@ -5,112 +5,57 @@
     <p class="section-subtitle">Con cualquiera de nuestros arreglos florales puedes expresar el sentimiento que llevas adentro y demostrar a ese ser querido cuanto lo amas.</p>
   </div>
 
-  <div class="featured-grid">
+  <div class="featured-grid" *ngIf="products.length > 0">
     <!-- Large Card (first product) -->
-    <div class="feat-card feat-card-large" >
+    <a class="feat-card feat-card-large" *ngIf="firstProduct" [routerLink]="['/productos', firstProduct.seoName]">
       <div class="feat-card-img">
-        <div class="feat-card-flower">
+        <div class="feat-card-flower" *ngIf="!firstProduct.primaryImage?.mediumUrl">
           <svg viewBox="0 0 400 600" fill="none" class="flower-svg-inner">
             <circle cx="200" cy="220" r="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
             <circle cx="200" cy="220" r="60" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
             <circle cx="200" cy="220" r="35" fill="rgba(255,255,255,0.1)"/>
-            <path d="M200 130 C228 170 250 195 200 220 C150 195 172 170 200 130" fill="rgba(255,255,255,0.1)"/>
-            <path d="M290 220 C250 242 228 265 200 220 C228 175 250 198 290 220" fill="rgba(255,255,255,0.1)"/>
-            <path d="M200 310 C172 268 150 245 200 220 C250 245 228 268 200 310" fill="rgba(255,255,255,0.1)"/>
-            <path d="M110 220 C150 198 172 175 200 220 C172 265 150 242 110 220" fill="rgba(255,255,255,0.1)"/>
-            <line x1="200" y1="310" x2="200" y2="550" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
-            <circle cx="120" cy="450" r="35" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-            <circle cx="280" cy="480" r="28" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
           </svg>
         </div>
+        <img *ngIf="firstProduct.primaryImage?.mediumUrl"
+             class="feat-card-flower"
+             [src]="firstProduct.primaryImage.mediumUrl"
+             [alt]="firstProduct.primaryImage.altText || firstProduct.seoName" />
       </div>
       <div class="feat-card-info">
-        <div class="feat-card-tag">Signature Collection</div>
-        <div class="feat-card-name">Name of product</div>
-        <div class="feat-card-price">2500</div>
+        <div class="feat-card-tag">{{ primaryCategory(firstProduct) }}</div>
+        <div class="feat-card-name">{{ firstProduct.name }}</div>
+        <div class="feat-card-price">{{ productPrice(firstProduct) | currency:firstProduct.price.currency }}</div>
       </div>
-    </div>
+    </a>
 
-    <!-- 4 Medium Cards -->
-    <div class="feat-card feat-card-medium"
-         [class]="'feat-card feat-card-medium reveal reveal-delay-'">
+    <!-- Medium Cards (rest of products) -->
+    <a class="feat-card feat-card-medium"
+       *ngFor="let product of restProducts; let i = index"
+       [routerLink]="['/productos', product.seoName]">
       <div class="feat-card-img">
-        <div class="feat-card-flower">
+        <div class="feat-card-flower" *ngIf="!product.primaryImage?.mediumUrl">
           <svg viewBox="0 0 300 280" fill="none" class="flower-svg-inner">
             <circle cx="150" cy="130" r="65" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
             <circle cx="150" cy="130" r="42" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
             <circle cx="150" cy="130" r="22" fill="rgba(255,255,255,0.08)"/>
           </svg>
         </div>
+        <img *ngIf="product.primaryImage?.mediumUrl"
+             class="feat-card-flower"
+             [src]="product.primaryImage.mediumUrl"
+             [alt]="product.primaryImage.altText || product.seoName" />
       </div>
       <div class="feat-card-info">
-        <div class="feat-card-tag">Category</div>
-        <div class="feat-card-name">Name</div>
-        <div class="feat-card-price">Price</div>
+        <div class="feat-card-tag">{{ primaryCategory(product) }}</div>
+        <div class="feat-card-name">{{ product.name }}</div>
+        <div class="feat-card-price">{{ productPrice(product) | currency:product.price.currency }}</div>
       </div>
-    </div>
-
-
-    <div class="feat-card feat-card-medium"
-         [class]="'feat-card feat-card-medium reveal reveal-delay-'">
-      <div class="feat-card-img">
-        <div class="feat-card-flower">
-          <svg viewBox="0 0 300 280" fill="none" class="flower-svg-inner">
-            <circle cx="150" cy="130" r="65" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-            <circle cx="150" cy="130" r="42" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <circle cx="150" cy="130" r="22" fill="rgba(255,255,255,0.08)"/>
-          </svg>
-        </div>
-      </div>
-      <div class="feat-card-info">
-        <div class="feat-card-tag">Category</div>
-        <div class="feat-card-name">Name</div>
-        <div class="feat-card-price">Price</div>
-      </div>
-    </div>
-
-    <div class="feat-card feat-card-medium"
-         [class]="'feat-card feat-card-medium reveal reveal-delay-'">
-      <div class="feat-card-img">
-        <div class="feat-card-flower">
-          <svg viewBox="0 0 300 280" fill="none" class="flower-svg-inner">
-            <circle cx="150" cy="130" r="65" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-            <circle cx="150" cy="130" r="42" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <circle cx="150" cy="130" r="22" fill="rgba(255,255,255,0.08)"/>
-          </svg>
-        </div>
-      </div>
-      <div class="feat-card-info">
-        <div class="feat-card-tag">Category</div>
-        <div class="feat-card-name">Name</div>
-        <div class="feat-card-price">Price</div>
-      </div>
-    </div>
-
-
-    <div class="feat-card feat-card-medium"
-         [class]="'feat-card feat-card-medium reveal reveal-delay-'">
-      <div class="feat-card-img">
-        <div class="feat-card-flower">
-          <svg viewBox="0 0 300 280" fill="none" class="flower-svg-inner">
-            <circle cx="150" cy="130" r="65" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
-            <circle cx="150" cy="130" r="42" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-            <circle cx="150" cy="130" r="22" fill="rgba(255,255,255,0.08)"/>
-          </svg>
-        </div>
-      </div>
-      <div class="feat-card-info">
-        <div class="feat-card-tag">Category</div>
-        <div class="feat-card-name">Name</div>
-        <div class="feat-card-price">Price</div>
-      </div>
-    </div>
-
+    </a>
   </div>
 
   <div class="featured-cta">
-    <button class="btn-primary">
-      <span><span>View All Flowers</span><span> → </span></span>
-    </button>
+    <a class="btn-primary" routerLink="/productos">
+      <span><span>Ver Todas las Flores</span><span> → </span></span>
+    </a>
   </div>
 </section>

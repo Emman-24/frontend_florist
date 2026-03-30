@@ -29,6 +29,40 @@ export interface ProductTag {
   route: string;
 }
 
+export interface ProductDescription {
+  shortDescription: string;
+  description: string;
+}
+
+export interface ProductFlower {
+  id: number;
+  name: string;
+}
+
+export interface ProductDetail {
+  id: number;
+  name: string;
+  slug: string;
+  seoName: string;
+  price: ProductPrice;
+  isAvailable: boolean;
+  seasonal: boolean;
+  featured: boolean;
+  views: number;
+  description: ProductDescription;
+  gallery: ProductImage[];
+  flowers: ProductFlower[];
+  categories: ProductCategory[];
+  tags: ProductTag[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProductDetailResponse {
+  data: ProductDetail;
+  message: string | null;
+}
+
 export interface Product {
   id: number;
   name: string;

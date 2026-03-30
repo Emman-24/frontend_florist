@@ -1,94 +1,85 @@
 <div class="app-view">
-  <div class="product-detail-page">
-    <!-- Back button -->
-    <button class="detail-back">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      Back to Flowers
-    </button>
+  <div class="product-detail-page" *ngIf="product">
+
+<!--    <a class="detail-back" routerLink="/productos">-->
+<!--      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">-->
+<!--        <path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>-->
+<!--      </svg>-->
+<!--      Back to Flowers-->
+<!--    </a>-->
 
     <div class="detail-grid">
       <!-- Gallery -->
       <div class="detail-gallery">
         <div class="detail-main-img" id="mainImage">
-          <div class="detail-main-flower"></div>
+          <img *ngIf="mainImage"
+               class="detail-main-flower"
+               [src]="mainImage.originalUrl"
+               [alt]="mainImage.altText || product.seoName" />
+          <div class="detail-main-flower" *ngIf="!mainImage"></div>
         </div>
-        <div class="detail-thumbnails">
-          <div class="detail-thumb">
-            <div class="detail-thumb-flower"></div>
+        <div class="detail-thumbnails" *ngIf="product.gallery.length > 1">
+          <div class="detail-thumb"
+               *ngFor="let img of product.gallery; let i = index"
+               [class.active]="selectedThumb() === i"
+               (click)="switchThumb(i)">
+            <img class="detail-thumb-flower"
+                 [src]="img.thumbnailUrl"
+                 [alt]="img.altText || product.seoName" />
           </div>
         </div>
       </div>
 
       <!-- Info -->
       <div class="detail-info">
-        <div class="detail-category">Category</div>
+        <div class="detail-category" *ngIf="primaryCategory">{{ primaryCategory }}</div>
         <h1 class="detail-name">
-          <em>Name</em> Name
+          <em>{{ product.name }}</em>
         </h1>
-        <div class="detail-latin">Latin Name</div>
-
-        <div class="detail-rating">
-          <span class="detail-stars">★★★★★</span>
-          <span class="detail-review-count">Rating ·  reviews</span>
-        </div>
+        <div class="detail-latin">{{ product.seoName }}</div>
 
         <div class="detail-price-row">
-          <span class="detail-price">$500</span>
-          <span class="detail-price-orig">$100</span>
+          <span class="detail-price">{{ formattedPrice | currency:product.price.currency }}</span>
+          <span class="detail-price-orig" *ngIf="product.price.hasDiscount">
+            {{ product.price.amount | currency:product.price.currency }}
+          </span>
+          <span class="product-badge sale" *ngIf="product.price.hasDiscount">
+            -{{ product.price.discountPercent }}%
+          </span>
         </div>
 
         <div class="detail-divider"></div>
 
-        <p class="detail-desc">10</p>
-
-        <!-- Sizes -->
-        <div class="detail-options-label">Select Size</div>
-        <div class="detail-size-options">
-          <button class="size-btn">
-            Size
-          </button>
-        </div>
+        <p class="detail-desc">{{ product.description.shortDescription }}</p>
 
         <div class="detail-divider"></div>
 
-        <!-- Colors -->
-        <div class="detail-options-label">Color Palette</div>
-        <div class="detail-color-options">
-          <button class="color-swatch">
-            Color
-          </button>
+
+        <!-- Categories -->
+        <div class="detail-options-label" *ngIf="product.categories.length > 0">Categorías</div>
+        <div class="detail-size-options" *ngIf="product.categories.length > 0">
+          <a class="size-btn"
+             *ngFor="let cat of product.categories"
+             [routerLink]="['/categorias', cat.slug]">
+            {{ cat.name }}
+          </a>
         </div>
 
-        <div class="detail-divider"></div>
+        <div class="detail-divider" *ngIf="product.categories.length > 0"></div>
 
-        <!-- Quantity -->
-        <div class="detail-options-label">Quantity</div>
-        <div class="detail-qty">
-          <button class="qty-btn" >−</button>
-          <span class="qty-num">2</span>
-          <button class="qty-btn">+</button>
+
+        <div class="detail-options-label">Disponibilidad</div>
+        <div class="detail-desc">
+          <span *ngIf="product.isAvailable" style="color: #5C7A65;">✓ Disponible</span>
+          <span *ngIf="!product.isAvailable" style="color: #B8705A;">✗ No disponible</span>
         </div>
 
-        <!-- Actions -->
         <div class="detail-actions">
-          <button class="btn-add-cart">
+          <button class="btn-add-cart" [disabled]="!product.isAvailable">
             <span>Add to Basket</span>
             <span>🌸</span>
           </button>
           <button class="btn-wishlist" title="Add to Wishlist">♡</button>
-        </div>
-
-        <!-- Features -->
-        <div class="detail-features">
-          <div class="feature-item">
-            <span class="feature-icon"></span>
-            <div class="feature-text">
-              <div class="feature-title"></div>
-              <div class="feature-desc"></div>
-            </div>
-          </div>
         </div>
 
         <!-- Tabs -->
@@ -99,11 +90,13 @@
             <button class="detail-tab-btn" [class.active]="activeTab() === 'delivery'" (click)="activeTab.set('delivery')">Delivery</button>
           </div>
           <div class="detail-tab-content" [class.active]="activeTab() === 'description'">
-            <p>Large description </p>
+            <p>{{ product.description.description }}</p>
           </div>
           <div class="detail-tab-content" [class.active]="activeTab() === 'care'">
             <ul>
-              <li></li>
+              <li>Trim stems at an angle before placing in water</li>
+              <li>Change water every 2 days</li>
+              <li>Keep away from direct sunlight and heat</li>
             </ul>
           </div>
           <div class="detail-tab-content" [class.active]="activeTab() === 'delivery'">
@@ -114,29 +107,13 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Related Products -->
-    <div class="related-section">
-      <div class="section-header">
-        <p class="section-eyebrow">You May Also Love</p>
-        <h2 class="section-title">Related <em>Blooms</em></h2>
-      </div>
-      <div class="products-grid">
-        <div class="product-card">
-          <div class="product-card-media">
-            <div class="product-card-flower" ></div>
-            <span class="product-badge">Badge</span>
-          </div>
-          <div class="product-card-body">
-            <div class="product-card-category">Category</div>
-            <div class="product-card-name">Name</div>
-            <div class="product-card-footer">
-              <div class="product-price">$Price</div>
-              <div class="product-rating">★ Rating</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="no-product" *ngIf="loading">
+    <p>Cargando producto...</p>
+  </div>
+
+  <div class="no-product" *ngIf="error">
+    <p>No se pudo cargar el producto.</p>
   </div>
 </div>

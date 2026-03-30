@@ -25,13 +25,13 @@
 
     <div class="products-grid">
 
-      <div class="product-card" *ngFor="let product of products">
+      <a class="product-card" *ngFor="let product of products" [routerLink]="['/productos', product.seoName]">
         <div class="product-card-media">
           <div class="product-card-flower" *ngIf="!product.primaryImage?.mediumUrl"></div>
           <img *ngIf="product.primaryImage?.mediumUrl"
                class="product-card-flower"
                [src]="product.primaryImage.mediumUrl"
-               [alt]="product.primaryImage.altText || product.name" />
+               [alt]="product.primaryImage.altText || product.seoName" />
           <span class="product-badge" *ngIf="product.featured">Destacado</span>
           <span class="product-badge sale" *ngIf="product.price.hasDiscount">-{{ product.price.discountPercent }}%</span>
         </div>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </a>
 
     </div>
   </div>
