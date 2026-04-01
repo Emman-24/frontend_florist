@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
-import {NgForOf} from '@angular/common';
+import {NgClass, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-process',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    NgClass
   ],
   templateUrl: './process.component.html',
   styleUrl: './process.component.sass'
