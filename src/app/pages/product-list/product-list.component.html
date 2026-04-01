@@ -24,30 +24,45 @@
     </div>
 
     <div class="products-grid">
-
       <a class="product-card" *ngFor="let product of products" [routerLink]="['/productos', product.seoName]">
         <div class="product-card-media">
           <div class="product-card-flower" *ngIf="!product.primaryImage?.mediumUrl"></div>
           <img *ngIf="product.primaryImage?.mediumUrl"
                class="product-card-flower"
                [src]="product.primaryImage.mediumUrl"
-               [alt]="product.primaryImage.altText || product.seoName" />
+               [alt]="product.primaryImage.altText || product.seoName"/>
           <span class="product-badge" *ngIf="product.featured">Destacado</span>
-          <span class="product-badge sale" *ngIf="product.price.hasDiscount">-{{ product.price.discountPercent }}%</span>
+          <span class="product-badge sale" *ngIf="product.price.hasDiscount">-{{ product.price.discountPercent }}
+            %</span>
         </div>
         <div class="product-card-body">
-          <div class="product-card-category" *ngIf="product.categories.length > 0">{{ pageTitle}}</div>
+          <div class="product-card-category" *ngIf="product.categories.length > 0">{{ pageTitle }}</div>
           <div class="product-card-name">{{ product.name }}</div>
-          <p class="product-card-desc" *ngIf="product.price.hasDiscount">{{ product.price.discountPercent }}% de descuento</p>
+          <p class="product-card-desc" *ngIf="product.price.hasDiscount">{{ product.price.discountPercent }}% de
+            descuento</p>
           <div class="product-card-footer">
             <div class="product-price">
-              <span class="product-price-old" *ngIf="product.price.hasDiscount">{{ product.price.amount | currency:product.price.currency }}</span>
+              <span class="product-price-old"
+                    *ngIf="product.price.hasDiscount">{{ product.price.amount | currency:product.price.currency }}</span>
               {{ (product.price.hasDiscount ? product.price.discountAmount : product.price.amount) | currency:product.price.currency }}
             </div>
           </div>
         </div>
       </a>
-
     </div>
+
+    <div class="products-empty" *ngIf="!loading() && products.length === 0">
+      <div class="products-empty-icon">✿</div>
+      <p class="products-empty-title">Sin flores por aquí</p>
+      <p class="products-empty-desc">No encontramos productos en esta categoría.</p>
+    </div>
+
+    <app-pagination
+      [currentPage]="currentPage()"
+      [totalPages]="totalPages"
+      [totalElements]="totalElements"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
   </div>
 </div>

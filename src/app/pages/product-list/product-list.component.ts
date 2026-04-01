@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, OnDestroy} from '@angular/core';
+import {Component, inject, OnInit, OnDestroy, signal} from '@angular/core';
 import {NgForOf, NgIf, CurrencyPipe} from '@angular/common';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {Subscription, switchMap, tap, combineLatest, map} from 'rxjs';
@@ -6,6 +6,7 @@ import {ProductService} from '../../services/product/product.service';
 import {CategoryService} from '../../services/category/category.service';
 import {Product} from '../../models/product';
 import {CategoryNode, Category} from '../../models/category';
+import {PaginationComponent} from '../../components/pagination/pagination.component';
 
 @Component({
   selector: 'app-product-list',
@@ -14,7 +15,8 @@ import {CategoryNode, Category} from '../../models/category';
     NgForOf,
     NgIf,
     CurrencyPipe,
-    RouterLink
+    RouterLink,
+    PaginationComponent
   ],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.sass'
@@ -23,12 +25,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   products: Product[] = [];
   totalElements = 0;
+  totalPages = 0;
+  loading = signal(false);
+  currentPage = signal(0);
+  readonly pageSize = 12;
 
-  /** The current parent category (from :categoryRoute) */
+
   activeCategory: Category | null = null;
-  /** The current sub-category (from :subCategoryRoute) */
   activeSubCategory: Category | null = null;
-  /** Children of the active parent category – used as filter buttons */
   subCategories: Category[] = [];
 
   private readonly route = inject(ActivatedRoute);
@@ -37,7 +41,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private sub!: Subscription;
 
   ngOnInit(): void {
-    // Collect all route params from the full path (own + all ancestors)
     const allParams$ = combineLatest(
       this.collectParamMaps(this.route)
     ).pipe(
@@ -81,9 +84,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
       }),
       switchMap(() => {
         const categoryId = this.activeSubCategory?.id ?? this.activeCategory?.id;
+        this.loading.set(true);
         return this.productService.getProducts({
-          page: 0,
-          size: 12,
+          page: this.currentPage(),
+          size: this.pageSize,
           sortBy: 'views',
           sortDir: 'desc',
           ...(categoryId != null ? {categoryId} : {})
@@ -92,11 +96,40 @@ export class ProductListComponent implements OnInit, OnDestroy {
     ).subscribe(response => {
       this.products = response.content;
       this.totalElements = response.totalElements;
+      this.totalPages = response.totalPages;
+      this.loading.set(false);
+      this.scrollToTop();
     });
   }
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  onPageChange(page: number): void {
+    this.currentPage.set(page);
+    const categoryId = this.activeSubCategory?.id ?? this.activeCategory?.id;
+    this.loading.set(true);
+
+    this.productService.getProducts({
+      page,
+      size: this.pageSize,
+      sortBy: 'views',
+      sortDir: 'desc',
+      ...(categoryId != null ? {categoryId} : {})
+    }).subscribe(response => {
+      this.products = response.content;
+      this.totalElements = response.totalElements;
+      this.totalPages = response.totalPages;
+      this.loading.set(false);
+      this.scrollToTop();
+    });
+  }
+
+  private scrollToTop(): void {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   get pageTitle(): string {
@@ -116,7 +149,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     return 'Nuestra Colección';
   }
 
-  /** Build routerLink for a sub-category filter button */
+
   subCategoryLink(sub: Category): string[] {
     if (this.activeCategory) {
       return ['/categorias', this.activeCategory.slug, sub.slug];
@@ -124,17 +157,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
     return [];
   }
 
-  /** Check if a sub-category is the active one */
   isActiveSubCategory(sub: Category): boolean {
     return this.activeSubCategory?.id === sub.id;
   }
 
-  /** Check if "all" filter is active (no sub-category selected) */
   isAllActive(): boolean {
     return this.activeCategory != null && this.activeSubCategory == null;
   }
 
-  /** Collect paramMap observables from the current route and all ancestors */
   private collectParamMaps(route: ActivatedRoute) {
     const maps = [];
     let current: ActivatedRoute | null = route;
