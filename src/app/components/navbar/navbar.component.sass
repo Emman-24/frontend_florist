@@ -2,20 +2,25 @@ $forest: #1E3A2F
 $moss: #2D5040
 $terracotta: #B8705A
 $cream: #F7F2EA
+$ivory: #EDE7DA
 $linen: #DDD3C3
 $text-mid: #4A4740
+$text-light: #8A857C
 $sage-light: #8FAF96
 $font-display: 'Cormorant Garamond', Georgia, serif
 $font-body: 'Jost', sans-serif
 $ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
 $ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
 
+// ─────────────────────────────────────────
+// NAV BAR
+// ─────────────────────────────────────────
 nav
   position: fixed
   top: 0
   left: 0
   right: 0
-  z-index: 100
+  z-index: 1000
   padding: 24px 48px
   display: flex
   align-items: center
@@ -26,16 +31,22 @@ nav
     padding: 16px 48px
     background: rgba(247, 242, 234, 0.92)
     backdrop-filter: blur(16px)
+    -webkit-backdrop-filter: blur(16px)
     border-bottom: 1px solid rgba(92, 122, 101, 0.15)
-
-  @media (max-width: 768px)
-    padding: 16px 24px
-    &.scrolled
-      padding: 12px 24px
 
   @media (max-width: 1024px)
     padding: 20px 32px
+    &.scrolled
+      padding: 16px 32px
 
+  @media (max-width: 768px)
+    padding: 18px 24px
+    &.scrolled
+      padding: 14px 24px
+
+// ─────────────────────────────────────────
+// LOGO
+// ─────────────────────────────────────────
 .nav-logo
   font-family: $font-display
   font-size: 24px
@@ -44,32 +55,52 @@ nav
   color: $forest
   text-transform: uppercase
   cursor: none
+  position: relative
+  z-index: 2   // above the mobile panel within nav's stacking context
 
   span
     font-style: italic
     color: $terracotta
 
+  @media (max-width: 768px)
+    font-size: 20px
+
+// ─────────────────────────────────────────
+// NAV LINKS – desktop row / mobile panel
+// ─────────────────────────────────────────
 .nav-links
   display: flex
   gap: 40px
   align-items: center
+  list-style: none
 
   @media (max-width: 768px)
-    display: none
+    gap: 0
+    align-items: stretch
+
+    // Slide-in from the right
     position: fixed
     top: 0
-    left: 0
     right: 0
     bottom: 0
-    background: $cream
+    width: min(320px, 84vw)
+    z-index: 1    // within nav's ctx; nav itself is z-index:1000
     flex-direction: column
-    justify-content: center
-    gap: 32px
-    z-index: 90
+    justify-content: flex-start
+    background: $cream
+    overflow-y: auto
+    overflow-x: hidden
+    padding: 80px 0 48px
+    transform: translateX(100%)
+    transition: transform 0.45s $ease-smooth
+    box-shadow: -12px 0 48px rgba($forest, 0.18)
 
     &.open
-      display: flex
+      transform: translateX(0)
 
+// ─────────────────────────────────────────
+// DESKTOP NAV LINK
+// ─────────────────────────────────────────
 .nav-link
   font-size: 11px
   font-weight: 400
@@ -96,48 +127,126 @@ nav
     background: $terracotta
     transition: width 0.4s $ease-smooth
 
-  &:hover
+  &:hover, &.active
     color: $forest
     &::after
       width: 100%
 
   @media (max-width: 768px)
-    font-size: 13px
+    // Hide desktop link inside dropdown li (replaced by .mobile-row)
+    &.desktop-trigger
+      display: none
 
-.basket-btn
-  &::after
-    display: none
+    // Simple links (no children) – full-width mobile row
+    &:not(.desktop-trigger)
+      width: 100%
+      padding: 18px 28px
+      font-size: 13px
+      letter-spacing: 0.14em
+      border-bottom: 1px solid rgba($linen, 0.8)
 
-.cart-count-badge
-  background: $linen
-  color: $forest
-  border-radius: 999px
-  padding: 2px 7px
-  font-size: 10px
-  font-weight: 500
-  transition: background 0.3s
+      &::after
+        display: none
 
-  &.has-items
-    background: $terracotta
-    color: $cream
+      &:hover, &.active
+        color: $terracotta
+        background: rgba($linen, 0.3)
 
-.nav-cta
-  background: $forest !important
-  color: $cream !important
-  padding: 10px 24px
-  border-radius: 999px
-  font-size: 11px !important
-  letter-spacing: 0.15em !important
+// ─────────────────────────────────────────
+// MOBILE ACCORDION ROW (link + expand btn)
+// ─────────────────────────────────────────
+.mobile-row
+  display: none
+
+  @media (max-width: 768px)
+    display: flex
+    align-items: stretch
+    border-bottom: 1px solid rgba($linen, 0.8)
+
+.mobile-link
+  flex: 1
+  display: flex
+  align-items: center
+  padding: 18px 28px
+  font-family: $font-body
+  font-size: 13px
   font-weight: 400
-  transition: background 0.3s, transform 0.2s $ease-spring !important
+  letter-spacing: 0.14em
+  text-transform: uppercase
+  color: $text-mid
+  transition: color 0.25s, background 0.25s
 
-  &::after
-    display: none !important
+  &:hover, &.active
+    color: $terracotta
+
+.mobile-expand
+  width: 52px
+  flex-shrink: 0
+  background: none
+  border: none
+  border-left: 1px solid rgba($linen, 0.8)
+  display: flex
+  align-items: center
+  justify-content: center
+  color: $text-light
+  cursor: pointer
+  transition: background 0.2s, color 0.2s
+
+  svg
+    transition: transform 0.35s $ease-smooth
+
+  &.open
+    background: rgba($linen, 0.45)
+    color: $forest
+    svg
+      transform: rotate(180deg)
 
   &:hover
-    background: $moss !important
-    transform: scale(1.03) !important
+    background: rgba($linen, 0.3)
+    color: $forest
 
+// ─────────────────────────────────────────
+// MOBILE ACCORDION SUB-LIST
+// ─────────────────────────────────────────
+.mobile-sub
+  display: none
+  list-style: none
+  overflow: hidden
+  max-height: 0
+  transition: max-height 0.4s $ease-smooth
+
+  @media (max-width: 768px)
+    display: block
+
+  &.open
+    max-height: 600px
+
+.mobile-sub-item
+  display: block
+  padding: 13px 28px 13px 44px
+  font-family: $font-body
+  font-size: 11px
+  font-weight: 300
+  letter-spacing: 0.15em
+  text-transform: uppercase
+  color: $text-mid
+  border-bottom: 1px solid rgba($linen, 0.6)
+  transition: color 0.2s, background 0.2s
+
+  &:hover, &.active
+    color: $forest
+    background: rgba($linen, 0.35)
+
+  &--all
+    color: $terracotta
+    font-weight: 400
+
+  &:last-child
+    border-bottom: 1px solid rgba($linen, 0.8)
+
+// ─────────────────────────────────────────
+// HAMBURGER  (z-index: 2 keeps it above the panel)
+// ─────────────────────────────────────────
 .nav-menu-toggle
   display: none
   flex-direction: column
@@ -146,36 +255,45 @@ nav
   padding: 4px 0
   background: none
   border: none
-  z-index: 91
+  cursor: pointer
   position: relative
+  z-index: 2   // above mobile panel within nav's stacking context
 
-  span
+  .line
     display: block
     height: 1.5px
     background: $forest
-    transition: transform 0.3s, opacity 0.3s, width 0.3s
+    border-radius: 2px
+    transform-origin: center
+    transition: transform 0.35s $ease-smooth, opacity 0.25s, width 0.3s $ease-smooth
 
     &:nth-child(2)
       width: 60%
 
-  &.open
-    span:nth-child(1)
+  &.open .line
+    &:nth-child(1)
       transform: translateY(6.5px) rotate(45deg)
-    span:nth-child(2)
+    &:nth-child(2)
       opacity: 0
-    span:nth-child(3)
+      width: 0
+    &:nth-child(3)
       transform: translateY(-6.5px) rotate(-45deg)
 
   @media (max-width: 768px)
     display: flex
 
+// ─────────────────────────────────────────
+// DESKTOP DROPDOWN (hover panel)
+// ─────────────────────────────────────────
 .nav-item-dropdown
   position: relative
   list-style: none
 
-.dropdown-trigger
-  .chevron
-    transition: transform 0.3s $ease-smooth
+.dropdown-trigger .chevron
+  transition: transform 0.3s $ease-smooth
+
+.nav-item-dropdown:hover .chevron
+  transform: rotate(180deg)
 
 .dropdown-panel
   display: none
@@ -184,16 +302,20 @@ nav
   left: 0
   min-width: 200px
   padding: 12px 0
-  background: rgba(247, 242, 234, 0.96)
+  background: rgba(247, 242, 234, 0.97)
   backdrop-filter: blur(16px)
+  -webkit-backdrop-filter: blur(16px)
   border: 1px solid rgba(92, 122, 101, 0.12)
-  border-radius: 8px
-  box-shadow: 0 8px 24px rgba(30, 58, 47, 0.08)
+  border-radius: 10px
+  box-shadow: 0 8px 32px rgba($forest, 0.1)
   list-style: none
-  z-index: 110
+  z-index: 10
 
   &.visible
     display: block
+
+  @media (max-width: 768px)
+    display: none !important
 
 .dropdown-item
   display: block

@@ -357,3 +357,19 @@ section
   height: 1px
   overflow: hidden
   clip: rect(0,0,0,0)
+
+
+.nav-body-backdrop
+  position: fixed
+  inset: 0
+  z-index: 999
+  background: rgba(30, 58, 47, 0.45)
+  backdrop-filter: blur(3px)
+  -webkit-backdrop-filter: blur(3px)
+  opacity: 0
+  pointer-events: none
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)
+
+  &--visible
+    opacity: 1
+    pointer-events: auto
