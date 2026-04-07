@@ -9,7 +9,7 @@
 <!--    </a>-->
 
     <div class="detail-grid">
-      <!-- Gallery -->
+
       <div class="detail-gallery">
         <div class="detail-main-img" id="mainImage">
           <img *ngIf="mainImage"
@@ -30,7 +30,6 @@
         </div>
       </div>
 
-      <!-- Info -->
       <div class="detail-info">
         <div class="detail-category" *ngIf="primaryCategory">{{ primaryCategory }}</div>
         <h1 class="detail-name">
@@ -55,54 +54,23 @@
         <div class="detail-divider"></div>
 
 
-        <!-- Categories -->
-        <div class="detail-options-label" *ngIf="product.categories.length > 0">Categorías</div>
-        <div class="detail-size-options" *ngIf="product.categories.length > 0">
-          <a class="size-btn"
-             *ngFor="let cat of product.categories"
-             [routerLink]="['/categorias', cat.slug]">
-            {{ cat.name }}
-          </a>
+        <div class="detail-features">
+          <div class="feature-item" *ngFor="let f of product.tags">
+            <span class="feature-icon">{{getEmojiForTag(f.route).emoji}}</span>
+            <div class="feature-text">
+              <div class="feature-title">{{f.text}}</div>
+              <div class="feature-desc">{{getEmojiForTag(f.route).desc}}</div>
+            </div>
+          </div>
         </div>
 
-        <div class="detail-divider" *ngIf="product.categories.length > 0"></div>
 
-
-        <div class="detail-options-label">Disponibilidad</div>
-        <div class="detail-desc">
-          <span *ngIf="product.isAvailable" style="color: #5C7A65;">✓ Disponible</span>
-          <span *ngIf="!product.isAvailable" style="color: #B8705A;">✗ No disponible</span>
-        </div>
-
-        <div class="detail-actions">
-          <button class="btn-add-cart" [disabled]="!product.isAvailable">
-            <span>Add to Basket</span>
-            <span>🌸</span>
-          </button>
-          <button class="btn-wishlist" title="Add to Wishlist">♡</button>
-        </div>
-
-        <!-- Tabs -->
         <div class="detail-tabs">
           <div class="detail-tab-headers">
-            <button class="detail-tab-btn" [class.active]="activeTab() === 'description'" (click)="activeTab.set('description')">Description</button>
-            <button class="detail-tab-btn" [class.active]="activeTab() === 'care'" (click)="activeTab.set('care')">Flower Care</button>
-            <button class="detail-tab-btn" [class.active]="activeTab() === 'delivery'" (click)="activeTab.set('delivery')">Delivery</button>
+            <button class="detail-tab-btn" [class.active]="activeTab() === 'description'" (click)="activeTab.set('description')">Descripción</button>
           </div>
           <div class="detail-tab-content" [class.active]="activeTab() === 'description'">
             <p>{{ product.description.description }}</p>
-          </div>
-          <div class="detail-tab-content" [class.active]="activeTab() === 'care'">
-            <ul>
-              <li>Trim stems at an angle before placing in water</li>
-              <li>Change water every 2 days</li>
-              <li>Keep away from direct sunlight and heat</li>
-            </ul>
-          </div>
-          <div class="detail-tab-content" [class.active]="activeTab() === 'delivery'">
-            <p><strong>Same-Day Delivery</strong> — Order before 2pm for same-day delivery. Free on orders over $85.</p>
-            <p><strong>Standard Delivery</strong> — Next-day nationwide, Tuesday–Saturday.</p>
-            <p><strong>Subscription</strong> — Weekly or fortnightly delivery, save 20% with free shipping.</p>
           </div>
         </div>
       </div>

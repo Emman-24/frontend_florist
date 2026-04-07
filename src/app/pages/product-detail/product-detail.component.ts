@@ -1,10 +1,15 @@
 import {Component, inject, OnInit, OnDestroy, signal} from '@angular/core';
 import {NgForOf, NgIf, CurrencyPipe} from '@angular/common';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {switchMap, map} from 'rxjs/operators';
 import {ProductService} from '../../services/product/product.service';
 import {ProductImage, ProductDetail} from '../../models/product';
+
+interface TagMetadata {
+  emoji: string;
+  desc: string;
+}
 
 @Component({
   selector: 'app-product-detail',
@@ -12,8 +17,7 @@ import {ProductImage, ProductDetail} from '../../models/product';
   imports: [
     NgForOf,
     NgIf,
-    CurrencyPipe,
-    RouterLink
+    CurrencyPipe
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.sass'
@@ -31,9 +35,52 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   private readonly productService = inject(ProductService);
   private sub!: Subscription;
 
+  tagMetadata: { [key: string]: TagMetadata } = {
+    'rosas': {
+      emoji: '🌹',
+      desc: 'Arreglo floral'
+    },
+    'girasoles': {
+      emoji: '🌻',
+      desc: 'Arreglo floral'
+    },
+    'gerberas': {
+      emoji: '🏵️',
+      desc: 'Arreglo floral'
+    },
+    'heliconias': {
+      emoji: '🌿',
+      desc: 'Arreglo floral'
+    },
+    'vino': {
+      emoji: '🍷',
+      desc: 'Licores y brindis'
+    },
+    'chocolates': {
+      emoji: '🍫',
+      desc: 'Dulces y confitería'
+    },
+    'peluche': {
+      emoji: '🧸',
+      desc: 'Detalles y regalos'
+    },
+    'frutas': {
+      emoji: '🍇',
+      desc: 'Canastas frutales'
+    },
+    'lirios': {
+      emoji: '🌺',
+      desc: 'Arreglo floral'
+    },
+    'globos': {
+      emoji: '🎈',
+      desc: 'Detalles y regalos'
+    }
+  };
+
   ngOnInit(): void {
     this.sub = this.route.paramMap.pipe(
-      map(params =>String(params.get('route'))),
+      map(params => String(params.get('route'))),
       switchMap(id => {
         this.loading = true;
         this.error = false;
@@ -71,6 +118,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     return this.product.price.hasDiscount && this.product.price.discountAmount != null
       ? this.product.price.discountAmount
       : this.product.price.amount;
+  }
+
+  getEmojiForTag(route: string): TagMetadata {
+    return this.tagMetadata[route] || {emoji: '✨', desc: 'Detalle especial'};
   }
 
   switchThumb(i: number): void {
