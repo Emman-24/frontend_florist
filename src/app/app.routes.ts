@@ -1,10 +1,12 @@
-import {ActivatedRouteSnapshot, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {environment} from '../environments/environment';
 import {HomeComponent} from './pages/home/home.component';
 import {seoResolver} from './resolvers/seo/seo.resolver';
 import {ProductListComponent} from './pages/product-list/product-list.component';
 import {ProductDetailComponent} from './pages/product-detail/product-detail.component';
 import {NotFoundComponent} from './pages/not-found/not-found.component';
+import {categorySeoResolver, subCategorySeoResolver} from './resolvers/category/category-seo.resolver';
+import {productSeoResolver} from './resolvers/product/product-seo.resolver';
 
 const BASE = environment.baseUrl
 export const routes: Routes = [
@@ -56,16 +58,7 @@ export const routes: Routes = [
       {
         path: ':route',
         loadComponent: () =>ProductDetailComponent,
-        resolve: {seo: seoResolver},
-        data: {
-          seo: (route: ActivatedRouteSnapshot) => ({
-            title: `${route.params['route']} - Floristería Akasia`,
-            description: `Compra ${route.params['route']} con entrega a domicilio en Pereira y Dosquebradas. Arreglos florales únicos de Floristería Akasia.`,
-            keywords: `${route.params['route']}, flores, Pereira, floristería, arreglos florales`,
-            url: `${BASE}/productos/${route.params['route']}`,
-            type: 'product',
-          }),
-        },
+        resolve: {seo: productSeoResolver},
       }
     ]
   },
@@ -83,33 +76,14 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () =>ProductListComponent,
-            resolve: {seo: seoResolver},
-            data: {
-              seo: (route: ActivatedRouteSnapshot) => ({
-                title: `${route.params['categoryRoute']} - Arreglos Florales`,
-                description: `Explora nuestra selección de arreglos florales en la categoría ${route.params['categoryRoute']}. Entrega a domicilio en Pereira.`,
-                keywords: `${route.params['categoryRoute']}, flores, arreglos florales, Pereira, floristería`,
-                url: `${BASE}/categorias/${route.params['categoryRoute']}`,
-                type: 'website',
-              }),
-            },
+            resolve: {seo: categorySeoResolver},
           },
 
           {
             // Subcategory →  /categorias/rosas/rosas-rojas
             path: ':subCategoryRoute',
             loadComponent: () =>ProductListComponent,
-            resolve: {seo: seoResolver},
-            data: {
-              seo: (route: ActivatedRouteSnapshot) => ({
-                title: `${route.params['subCategoryRoute']} - ${route.params['categoryRoute']} - Floristería Akasia`,
-                description: `Explora ${route.params['subCategoryRoute']} dentro de ${route.params['categoryRoute']}. Arreglos florales con entrega a domicilio en Pereira.`,
-                keywords: `${route.params['subCategoryRoute']}, ${route.params['categoryRoute']}, flores, Pereira, floristería`,
-                url: `${BASE}/categorias/${route.params['categoryRoute']}/${route.params['subCategoryRoute']}`,
-                type: 'website',
-              }),
-            }
-
+            resolve: {seo: subCategorySeoResolver},
           }
 
         ]
