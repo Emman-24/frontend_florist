@@ -66,14 +66,14 @@ footer
   align-items: center
   justify-content: center
   color: rgba($cream, 0.5)
-  font-size: 12px
-  transition: border-color 0.3s $ease-smooth, color 0.3s, background 0.3s
-  cursor: none
+  transition: border-color 0.3s $ease-smooth, color 0.3s, background 0.3s, transform 0.3s $ease-spring
+  cursor: pointer
 
   &:hover
     border-color: $terracotta
-    color: $terracotta
-    background: rgba($terracotta, 0.08)
+    color: $cream
+    background: rgba($terracotta, 0.2)
+    transform: translateY(-2px)
 
 .footer-col-title
   font-size: 11px
@@ -93,10 +93,29 @@ footer
   font-weight: 300
   color: rgba($cream, 0.5)
   transition: color 0.3s
-  cursor: none
+  cursor: pointer
+  font-style: normal
 
   &:hover
     color: $cream
+
+  &--icon
+    display: flex
+    align-items: flex-start
+    gap: 10px
+    cursor: default
+
+    svg
+      flex-shrink: 0
+      margin-top: 2px
+      opacity: 0.6
+
+    &[href]
+      cursor: pointer
+      &:hover
+        color: $cream
+        svg
+          opacity: 1
 
 .footer-bottom
   max-width: 1280px
@@ -107,23 +126,39 @@ footer
   align-items: center
   justify-content: space-between
   flex-wrap: wrap
-  gap: 16px
+  gap: 12px
+
+  @media (max-width: 600px)
+    flex-direction: column
+    align-items: flex-start
 
 .footer-copy
   font-size: 12px
   font-weight: 300
   color: rgba($cream, 0.3)
 
-.footer-legal
+.footer-made
+  font-size: 12px
+  font-weight: 300
+  color: rgba($cream, 0.3)
   display: flex
-  gap: 24px
+  align-items: center
+  gap: 5px
 
-  a
-    font-size: 12px
-    font-weight: 300
-    color: rgba($cream, 0.3)
-    transition: color 0.3s
-    cursor: none
+.footer-heart
+  color: $terracotta
+  font-size: 13px
+  animation: heartbeat 2.4s ease-in-out infinite
 
-    &:hover
-      color: rgba($cream, 0.6)
+@keyframes heartbeat
+  0%, 100%
+    transform: scale(1)
+  14%
+    transform: scale(1.2)
+  28%
+    transform: scale(1)
+  42%
+    transform: scale(1.15)
+  56%
+    transform: scale(1)
+
