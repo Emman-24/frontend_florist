@@ -1,1 +1,91 @@
-<p>not-found works!</p>
+<section class="nf-page">
+
+  <!-- Ambient background petals -->
+  <div class="nf-petal nf-petal--1"></div>
+  <div class="nf-petal nf-petal--2"></div>
+  <div class="nf-petal nf-petal--3"></div>
+  <div class="nf-petal nf-petal--4"></div>
+  <div class="nf-petal nf-petal--5"></div>
+
+  <!-- Central botanical illustration -->
+  <div class="nf-bloom">
+    <svg class="nf-bloom-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Outer orbit ring -->
+      <circle cx="160" cy="160" r="148" stroke="rgba(184,112,90,0.12)" stroke-width="1" stroke-dasharray="6 10"/>
+      <!-- Middle ring -->
+      <circle cx="160" cy="160" r="108" stroke="rgba(92,122,101,0.18)" stroke-width="1"/>
+      <!-- Core petals -->
+      <path d="M160 52 C185 95 185 125 160 160 C135 125 135 95 160 52" fill="rgba(184,112,90,0.14)" stroke="rgba(184,112,90,0.35)" stroke-width="1"/>
+      <path d="M268 160 C225 185 195 185 160 160 C195 135 225 135 268 160" fill="rgba(184,112,90,0.14)" stroke="rgba(184,112,90,0.35)" stroke-width="1"/>
+      <path d="M160 268 C135 225 135 195 160 160 C185 195 185 225 160 268" fill="rgba(184,112,90,0.14)" stroke="rgba(184,112,90,0.35)" stroke-width="1"/>
+      <path d="M52 160 C95 135 125 135 160 160 C125 185 95 185 52 160" fill="rgba(184,112,90,0.14)" stroke="rgba(184,112,90,0.35)" stroke-width="1"/>
+      <!-- Diagonal petals -->
+      <path d="M218 102 C200 138 178 150 160 160 C162 140 174 118 218 102" fill="rgba(92,122,101,0.12)" stroke="rgba(92,122,101,0.3)" stroke-width="1"/>
+      <path d="M218 218 C182 200 170 178 160 160 C180 162 202 174 218 218" fill="rgba(92,122,101,0.12)" stroke="rgba(92,122,101,0.3)" stroke-width="1"/>
+      <path d="M102 218 C120 182 142 170 160 160 C158 180 146 202 102 218" fill="rgba(92,122,101,0.12)" stroke="rgba(92,122,101,0.3)" stroke-width="1"/>
+      <path d="M102 102 C138 120 150 142 160 160 C140 158 118 146 102 102" fill="rgba(92,122,101,0.12)" stroke="rgba(92,122,101,0.3)" stroke-width="1"/>
+      <!-- Center stamen -->
+      <circle cx="160" cy="160" r="22" fill="rgba(247,242,234,0.9)" stroke="rgba(184,112,90,0.4)" stroke-width="1.5"/>
+      <circle cx="160" cy="160" r="10" fill="rgba(184,112,90,0.25)"/>
+      <!-- Stem line -->
+      <line x1="160" y1="268" x2="160" y2="310" stroke="rgba(92,122,101,0.4)" stroke-width="2" stroke-linecap="round"/>
+      <!-- Small leaves on stem -->
+      <path d="M160 290 C145 282 138 274 142 268" stroke="rgba(92,122,101,0.35)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M160 280 C175 272 182 264 178 258" stroke="rgba(92,122,101,0.35)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <div class="nf-content">
+
+    <div class="nf-eyebrow">
+      <span class="nf-eyebrow-line"></span>
+      <span class="nf-eyebrow-text">Error 404</span>
+      <span class="nf-eyebrow-line"></span>
+    </div>
+
+    <h1 class="nf-code">
+      <span class="nf-code-digit">4</span>
+      <span class="nf-code-zero">
+        <span class="nf-code-zero-inner">✿</span>
+      </span>
+      <span class="nf-code-digit">4</span>
+    </h1>
+
+    <h2 class="nf-title">
+      Esta flor se ha<br>
+      <em>perdido entre el jardín</em>
+    </h2>
+
+    <p class="nf-desc">
+      La página que buscas no existe o fue movida a otro lugar.
+      Permítenos llevarte de vuelta a donde florecen los arreglos más hermosos.
+    </p>
+
+    <div class="nf-actions">
+      <a class="btn-primary" routerLink="/">
+        <span>
+          <span>Volver al inicio</span>
+          <span>→</span>
+        </span>
+      </a>
+      <a class="btn-ghost" routerLink="/productos">
+        <span>Ver flores</span>
+        <span class="arrow">✿</span>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Decorative botanical strip at bottom -->
+  <div class="nf-strip" aria-hidden="true">
+    <span>Floristería Akasia</span>
+    <span class="nf-strip-dot"></span>
+    <span>Pereira · Risaralda</span>
+    <span class="nf-strip-dot"></span>
+    <span>Flores con Amor</span>
+    <span class="nf-strip-dot"></span>
+    <span>Entrega a Domicilio</span>
+  </div>
+
+</section>

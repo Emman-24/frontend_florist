@@ -1,0 +1,358 @@
+$forest: #1E3A2F
+$moss: #2D5040
+$sage: #5C7A65
+$sage-light: #8FAF96
+$cream: #F7F2EA
+$ivory: #EDE7DA
+$linen: #DDD3C3
+$terracotta: #B8705A
+$blush: #D9A89C
+$text-mid: #4A4740
+$text-light: #8A857C
+$font-display: 'Cormorant Garamond', Georgia, serif
+$font-italic: 'Playfair Display', Georgia, serif
+$font-body: 'Jost', sans-serif
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+
+// ─────────────────────────────────────────
+// PAGE SCAFFOLD
+// ─────────────────────────────────────────
+.nf-page
+  min-height: 100vh
+  background: $cream
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  padding: 120px 24px 80px
+  position: relative
+  overflow: hidden
+  text-align: center
+
+// ─────────────────────────────────────────
+// FLOATING PETALS
+// ─────────────────────────────────────────
+.nf-petal
+  position: absolute
+  border-radius: 50% 0 50% 0
+  opacity: 0
+  pointer-events: none
+  animation: petal-drift linear infinite
+
+.nf-petal--1
+  width: 22px
+  height: 14px
+  background: rgba($terracotta, 0.28)
+  top: 85%
+  left: 12%
+  animation-duration: 9s
+  animation-delay: 0.5s
+
+.nf-petal--2
+  width: 14px
+  height: 9px
+  background: rgba($sage, 0.22)
+  top: 70%
+  left: 78%
+  animation-duration: 11s
+  animation-delay: 2s
+
+.nf-petal--3
+  width: 18px
+  height: 12px
+  background: rgba($terracotta, 0.2)
+  top: 90%
+  left: 55%
+  animation-duration: 8s
+  animation-delay: 1s
+
+.nf-petal--4
+  width: 10px
+  height: 7px
+  background: rgba($sage-light, 0.3)
+  top: 75%
+  left: 35%
+  animation-duration: 13s
+  animation-delay: 3s
+
+.nf-petal--5
+  width: 16px
+  height: 10px
+  background: rgba($blush, 0.25)
+  top: 92%
+  left: 88%
+  animation-duration: 10s
+  animation-delay: 0s
+
+@keyframes petal-drift
+  0%
+    transform: translateY(0) rotate(0deg) translateX(0)
+    opacity: 0
+  8%
+    opacity: 0.9
+  92%
+    opacity: 0.5
+  100%
+    transform: translateY(-100vh) rotate(340deg) translateX(40px)
+    opacity: 0
+
+// ─────────────────────────────────────────
+// BOTANICAL BLOOM ILLUSTRATION
+// ─────────────────────────────────────────
+.nf-bloom
+  position: absolute
+  inset: 0
+  display: flex
+  align-items: center
+  justify-content: center
+  pointer-events: none
+  z-index: 0
+
+.nf-bloom-svg
+  width: clamp(280px, 50vw, 480px)
+  height: clamp(280px, 50vw, 480px)
+  opacity: 0
+  animation: bloom-reveal 2s $ease-smooth 0.3s forwards
+  transform-origin: center
+
+  // Petal groups rotate slowly
+  path
+    transform-origin: 160px 160px
+
+@keyframes bloom-reveal
+  from
+    opacity: 0
+    transform: scale(0.85) rotate(-10deg)
+  to
+    opacity: 1
+    transform: scale(1) rotate(0deg)
+
+// Gentle perpetual rotation of the outer ring
+.nf-bloom-svg circle:first-child
+  animation: orbit-spin 40s linear infinite
+
+@keyframes orbit-spin
+  to
+    transform: rotate(360deg)
+    transform-origin: 160px 160px
+
+// ─────────────────────────────────────────
+// CONTENT
+// ─────────────────────────────────────────
+.nf-content
+  position: relative
+  z-index: 1
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 0
+
+// Eyebrow
+.nf-eyebrow
+  display: flex
+  align-items: center
+  gap: 14px
+  margin-bottom: 32px
+  opacity: 0
+  animation: nf-fade-up 0.8s $ease-smooth 0.6s forwards
+
+.nf-eyebrow-line
+  display: block
+  width: 32px
+  height: 1px
+  background: $terracotta
+
+.nf-eyebrow-text
+  font-family: $font-body
+  font-size: 10px
+  font-weight: 400
+  letter-spacing: 0.4em
+  text-transform: uppercase
+  color: $terracotta
+
+// 404 numeral display
+.nf-code
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 8px
+  margin-bottom: 28px
+
+.nf-code-digit
+  font-family: $font-display
+  font-size: clamp(88px, 16vw, 160px)
+  font-weight: 300
+  color: $forest
+  line-height: 1
+  opacity: 0
+
+  &:first-child
+    animation: nf-slide-left 0.9s $ease-smooth 0.9s forwards
+
+  &:last-child
+    animation: nf-slide-right 0.9s $ease-smooth 0.9s forwards
+
+.nf-code-zero
+  position: relative
+  width: clamp(72px, 12vw, 130px)
+  height: clamp(72px, 12vw, 130px)
+  display: flex
+  align-items: center
+  justify-content: center
+  border-radius: 50%
+  border: 2px solid rgba($terracotta, 0.3)
+  background: radial-gradient(ellipse at 40% 35%, rgba($terracotta, 0.08) 0%, transparent 70%)
+  opacity: 0
+  animation: nf-bloom-in 1s $ease-spring 1.1s forwards
+
+.nf-code-zero-inner
+  font-size: clamp(32px, 6vw, 60px)
+  animation: nf-spin-slow 8s linear infinite
+  display: block
+  line-height: 1
+
+@keyframes nf-spin-slow
+  to
+    transform: rotate(360deg)
+
+// Title
+.nf-title
+  font-family: $font-display
+  font-size: clamp(22px, 3.5vw, 38px)
+  font-weight: 300
+  color: $forest
+  line-height: 1.35
+  margin-bottom: 20px
+  opacity: 0
+  animation: nf-fade-up 0.8s $ease-smooth 1.3s forwards
+
+  em
+    font-style: italic
+    color: $terracotta
+    font-family: $font-italic
+
+// Description
+.nf-desc
+  font-family: $font-body
+  font-size: 15px
+  font-weight: 300
+  line-height: 1.8
+  color: $text-mid
+  max-width: 420px
+  margin: 0 auto 44px
+  opacity: 0
+  animation: nf-fade-up 0.8s $ease-smooth 1.5s forwards
+
+// Actions
+.nf-actions
+  display: flex
+  align-items: center
+  gap: 24px
+  flex-wrap: wrap
+  justify-content: center
+  opacity: 0
+  animation: nf-fade-up 0.8s $ease-smooth 1.7s forwards
+
+// ─────────────────────────────────────────
+// BOTTOM DECORATIVE STRIP
+// ─────────────────────────────────────────
+.nf-strip
+  position: absolute
+  bottom: 0
+  left: 0
+  right: 0
+  padding: 14px 0
+  background: $forest
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 20px
+  font-family: $font-body
+  font-size: 10px
+  font-weight: 300
+  letter-spacing: 0.25em
+  text-transform: uppercase
+  color: rgba($cream, 0.45)
+  z-index: 1
+  opacity: 0
+  animation: nf-fade-in 1s $ease-smooth 2s forwards
+
+  @media (max-width: 600px)
+    gap: 12px
+    font-size: 9px
+
+.nf-strip-dot
+  width: 3px
+  height: 3px
+  border-radius: 50%
+  background: $terracotta
+  flex-shrink: 0
+
+// ─────────────────────────────────────────
+// SHARED KEYFRAMES
+// ─────────────────────────────────────────
+@keyframes nf-fade-up
+  from
+    opacity: 0
+    transform: translateY(20px)
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes nf-fade-in
+  to
+    opacity: 1
+
+@keyframes nf-slide-left
+  from
+    opacity: 0
+    transform: translateX(-30px)
+  to
+    opacity: 1
+    transform: translateX(0)
+
+@keyframes nf-slide-right
+  from
+    opacity: 0
+    transform: translateX(30px)
+  to
+    opacity: 1
+    transform: translateX(0)
+
+@keyframes nf-bloom-in
+  from
+    opacity: 0
+    transform: scale(0.5) rotate(-20deg)
+  to
+    opacity: 1
+    transform: scale(1) rotate(0deg)
+
+// ─────────────────────────────────────────
+// BTN OVERRIDES (match global styles)
+// ─────────────────────────────────────────
+.btn-ghost .arrow
+  font-style: normal
+  transition: transform 0.4s $ease-spring
+
+.btn-ghost:hover .arrow
+  transform: rotate(180deg)
+
+// ─────────────────────────────────────────
+// RESPONSIVE
+// ─────────────────────────────────────────
+@media (max-width: 768px)
+  .nf-page
+    padding: 100px 24px 64px
+
+  .nf-actions
+    flex-direction: column
+    gap: 16px
+
+    .btn-primary, .btn-ghost
+      width: 100%
+      justify-content: center
+
+  .nf-strip
+    span:nth-child(n+4)
+      display: none
