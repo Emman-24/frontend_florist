@@ -50,11 +50,11 @@ app.use(
         'connect-src': isProduction
           ? [
             "'self'",
-            'https://backend.floristeriaakasia.com.co',
+            'https://backendflorist-production.up.railway.app',
           ] : [
             "'self'",
             'http://localhost:8080',
-            'https://backend.floristeriaakasia.com.co',
+            'https://backendflorist-production.up.railway.app',
           ],
 
         'frame-ancestors': ["'none'"],
@@ -90,9 +90,9 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
 });
 
 const globalLimiter = rateLimit({
-  windowMs: 60 * 1_000,   // 1 minute
-  max: 200,          // requests per window per IP
-  standardHeaders: 'draft-7',   // RateLimit-* headers (RFC standard)
+  windowMs: 60 * 1_000,
+  max: 200,
+  standardHeaders: 'draft-7',
   legacyHeaders: false,
   message: {error: 'Too many requests. Please try again later.'},
   skip: (req) => req.path === '/health',
@@ -159,7 +159,7 @@ if (isMainModule(import.meta.url)) {
 
   server.headersTimeout = 30_000;
   server.requestTimeout = 30_000;
-  server.keepAliveTimeout = 65_000; // slightly above typical LB idle timeout
+  server.keepAliveTimeout = 65_000;
 }
 
 export const reqHandler = createNodeRequestHandler(app);

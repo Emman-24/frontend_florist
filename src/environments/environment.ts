@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://backend.floristeriaakasia.com.co/api',
+  apiUrl: 'https://backendflorist-production.up.railway.app/api',
   baseUrl: 'https://www.floristeriaakasia.com.co',
   apiTimeout: 10000,
   enableDebugLog: false
