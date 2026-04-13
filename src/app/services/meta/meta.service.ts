@@ -124,7 +124,7 @@ export class MetaService {
     const script = this.document.createElement('script');
     script.type = 'application/ld+json';
     script.id = 'structured-data';
-    script.text = JSON.stringify(data);
+    script.text = this.escapeJson(data);
     document.head.appendChild(script);
   }
 
@@ -200,5 +200,9 @@ export class MetaService {
     };
 
     this.addStructuredData(structuredData);
+  }
+
+  private escapeJson(data: any): string {
+    return JSON.stringify(data).replace(/<\/script>/gi, '<\\/script>');
   }
 }

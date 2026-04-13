@@ -6,8 +6,7 @@
   </div>
 
   <div class="featured-grid" *ngIf="products.length > 0">
-    <!-- Large Card (first product) -->
-    <a class="feat-card feat-card-large" *ngIf="firstProduct" [routerLink]="['/productos', firstProduct.seoName]">
+    <a class="feat-card feat-card-large" *ngIf="firstProduct" [routerLink]="['/productos', firstProduct.slug]">
       <div class="feat-card-img">
         <div class="feat-card-flower" *ngIf="!firstProduct.primaryImage?.mediumUrl">
           <svg viewBox="0 0 400 600" fill="none" class="flower-svg-inner">
@@ -30,8 +29,8 @@
 
     <!-- Medium Cards (rest of products) -->
     <a class="feat-card feat-card-medium"
-       *ngFor="let product of restProducts; let i = index"
-       [routerLink]="['/productos', product.seoName]">
+       *ngFor="let product of restProducts; "
+       [routerLink]="['/productos', product.slug]">
       <div class="feat-card-img">
         <div class="feat-card-flower" *ngIf="!product.primaryImage?.mediumUrl">
           <svg viewBox="0 0 300 280" fill="none" class="flower-svg-inner">

@@ -24,7 +24,7 @@
     </div>
 
     <div class="products-grid">
-      <a class="product-card" *ngFor="let product of products" [routerLink]="['/productos', product.seoName]">
+      <a class="product-card" *ngFor="let product of products" [routerLink]="['/productos', product.slug]">
         <div class="product-card-media">
           <div class="product-card-flower" *ngIf="!product.primaryImage?.mediumUrl"></div>
           <img *ngIf="product.primaryImage?.mediumUrl"

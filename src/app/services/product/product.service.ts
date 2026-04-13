@@ -32,4 +32,7 @@ export class ProductService {
   getProductBySeoName(seoname:string): Observable<ProductDetailResponse> {
     return this.http.get<ProductDetailResponse>(`${environment.apiUrl}/floral-arrangement/seo-name/${seoname}`);
   }
+  getProductBySlug(slug:string): Observable<ProductDetailResponse> {
+    return this.http.get<ProductDetailResponse>(`${environment.apiUrl}/floral-arrangement/slug/${slug}`);
+  }
 }

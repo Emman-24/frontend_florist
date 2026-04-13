@@ -13,7 +13,7 @@ export const productSeoResolver: ResolveFn<void> = (route) => {
 
   const seoName = route.paramMap.get('route') ?? '';
 
-  return productService.getProductBySeoName(seoName).pipe(
+  return productService.getProductBySlug(seoName).pipe(
     take(1),
     map(({ data: product }) => {
       const price = product.price.hasDiscount && product.price.discountAmount != null

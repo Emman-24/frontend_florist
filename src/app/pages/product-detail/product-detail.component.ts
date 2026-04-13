@@ -78,6 +78,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     }
   };
 
+
   ngOnInit(): void {
     this.sub = this.route.paramMap.pipe(
       map(params => String(params.get('route'))),
@@ -85,7 +86,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.error = false;
         this.selectedThumb.set(0);
-        return this.productService.getProductBySeoName(id);
+        return this.productService.getProductBySlug(id);
       })
     ).subscribe({
       next: response => {
