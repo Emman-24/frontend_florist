@@ -1,7 +1,7 @@
 import {Component, inject, OnInit, OnDestroy, signal} from '@angular/core';
 import {NgForOf, NgIf, CurrencyPipe} from '@angular/common';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {Subscription, switchMap, tap, combineLatest, map} from 'rxjs';
+import {switchMap, tap, combineLatest, map, BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import {ProductService} from '../../services/product/product.service';
 import {CategoryService} from '../../services/category/category.service';
 import {Product} from '../../models/product';
@@ -29,7 +29,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   loading = signal(false);
   currentPage = signal(0);
   readonly pageSize = 12;
-
+  readonly skeletonItems = Array(this.pageSize).fill(null);
 
   activeCategory: Category | null = null;
   activeSubCategory: Category | null = null;
@@ -38,7 +38,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly productService = inject(ProductService);
   private readonly categoryService = inject(CategoryService);
-  private sub!: Subscription;
+
+  private readonly pageChange$ = new BehaviorSubject<number>(0);
+  private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
     const allParams$ = combineLatest(
@@ -55,106 +57,84 @@ export class ProductListComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.sub = combineLatest([
-      allParams$,
-      this.categoryService.getCategories()
-    ]).pipe(
-      tap(([params, tree]) => {
-        const categorySlug: string | undefined = params['categoryRoute'];
-        const subCategorySlug: string | undefined = params['subCategoryRoute'];
+    combineLatest([allParams$, this.categoryService.getCategories()])
+      .pipe(
+        tap(([params, tree]) => {
+          const categorySlug = params['categoryRoute'];
+          const subCategorySlug = params['subCategoryRoute'];
 
-        this.activeCategory = null;
-        this.activeSubCategory = null;
-        this.subCategories = [];
+          this.activeCategory = null;
+          this.activeSubCategory = null;
+          this.subCategories = [];
 
-        if (categorySlug) {
-          const parentNode = this.findNodeBySlug(tree, categorySlug);
-          if (parentNode) {
-            this.activeCategory = parentNode.category;
-            this.subCategories = parentNode.children.map(c => c.category);
+          if (categorySlug) {
+            const parentNode = this.findNodeBySlug(tree, categorySlug);
+            if (parentNode) {
+              this.activeCategory = parentNode.category;
+              this.subCategories = parentNode.children.map(c => c.category);
 
-            if (subCategorySlug) {
-              const childNode = parentNode.children.find(c => c.category.slug === subCategorySlug);
-              if (childNode) {
-                this.activeSubCategory = childNode.category;
+              if (subCategorySlug) {
+                const childNode = parentNode.children.find(c => c.category.slug === subCategorySlug);
+                if (childNode) this.activeSubCategory = childNode.category;
               }
             }
           }
-        }
-      }),
-      switchMap(() => {
-        const categoryId = this.activeSubCategory?.id ?? this.activeCategory?.id;
-        this.loading.set(true);
-        return this.productService.getProducts({
-          page: this.currentPage(),
-          size: this.pageSize,
-          sortBy: 'views',
-          sortDir: 'desc',
-          ...(categoryId != null ? {categoryId} : {})
-        });
-      })
-    ).subscribe(response => {
-      this.products = response.content;
-      this.totalElements = response.totalElements;
-      this.totalPages = response.totalPages;
-      this.loading.set(false);
-      this.scrollToTop();
-    });
+
+          this.currentPage.set(0);
+        }),
+
+        switchMap(() => {
+          this.pageChange$.next(0);
+          return this.pageChange$;
+        }),
+
+        switchMap(page => {
+          const categoryId = this.activeSubCategory?.id ?? this.activeCategory?.id;
+          this.loading.set(true);
+          return this.productService.getProducts({
+            page,
+            size: this.pageSize,
+            sortBy: 'views',
+            sortDir: 'desc',
+            ...(categoryId != null ? {categoryId} : {}),
+          });
+        }),
+
+        takeUntil(this.destroy$),
+      )
+      .subscribe(response => {
+        this.products = response.content;
+        this.totalElements = response.totalElements;
+        this.totalPages = response.totalPages;
+        this.loading.set(false);
+        this.scrollToTop();
+      });
   }
 
   ngOnDestroy(): void {
-    this.sub?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onPageChange(page: number): void {
     this.currentPage.set(page);
-    const categoryId = this.activeSubCategory?.id ?? this.activeCategory?.id;
-    this.loading.set(true);
-
-    this.productService.getProducts({
-      page,
-      size: this.pageSize,
-      sortBy: 'views',
-      sortDir: 'desc',
-      ...(categoryId != null ? {categoryId} : {})
-    }).subscribe(response => {
-      this.products = response.content;
-      this.totalElements = response.totalElements;
-      this.totalPages = response.totalPages;
-      this.loading.set(false);
-      this.scrollToTop();
-    });
-  }
-
-  private scrollToTop(): void {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    this.pageChange$.next(page);
   }
 
   get pageTitle(): string {
-    if (this.activeSubCategory) {
-      return this.activeSubCategory.name;
-    }
-    if (this.activeCategory) {
-      return this.activeCategory.name;
-    }
+    if (this.activeSubCategory) return this.activeSubCategory.name;
+    if (this.activeCategory) return this.activeCategory.name;
     return 'Flores';
   }
 
   get pageEyebrow(): string {
-    if (this.activeCategory) {
-      return this.activeCategory.name;
-    }
-    return 'Nuestra Colección';
+    return this.activeCategory?.name ?? 'Nuestra Colección';
   }
 
-
   subCategoryLink(sub: Category): string[] {
-    if (this.activeCategory) {
-      return ['/categorias', this.activeCategory.slug, sub.slug];
-    }
-    return [];
+    return this.activeCategory
+      ? ['/categorias', this.activeCategory.slug, sub.slug]
+      : [];
   }
 
   isActiveSubCategory(sub: Category): boolean {
@@ -164,6 +144,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   isAllActive(): boolean {
     return this.activeCategory != null && this.activeSubCategory == null;
   }
+
+  private scrollToTop(): void {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }
+
 
   private collectParamMaps(route: ActivatedRoute) {
     const maps = [];

@@ -3,7 +3,6 @@ import {HeroComponent} from '../../components/hero/hero.component';
 import {MarqueeComponent} from '../../components/marquee/marquee.component';
 import {FeaturedComponent} from '../../components/featured/featured.component';
 import {ProcessComponent} from '../../components/process/process.component';
-import {StoryComponent} from '../../components/story/story.component';
 import {FilosofyComponent} from '../../components/filosofy/filosofy.component';
 
 @Component({

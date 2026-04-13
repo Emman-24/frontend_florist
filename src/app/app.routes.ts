@@ -1,10 +1,6 @@
 import {Routes} from '@angular/router';
 import {environment} from '../environments/environment';
-import {HomeComponent} from './pages/home/home.component';
 import {seoResolver} from './resolvers/seo/seo.resolver';
-import {ProductListComponent} from './pages/product-list/product-list.component';
-import {ProductDetailComponent} from './pages/product-detail/product-detail.component';
-import {NotFoundComponent} from './pages/not-found/not-found.component';
 import {categorySeoResolver, subCategorySeoResolver} from './resolvers/category/category-seo.resolver';
 import {productSeoResolver} from './resolvers/product/product-seo.resolver';
 
@@ -16,7 +12,7 @@ export const routes: Routes = [
   // ─────────────────────────────────────────
   {
     path: '',
-    loadComponent: () => HomeComponent,
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
     resolve: {seo: seoResolver},
     data: {
       seo: () => ({
@@ -39,7 +35,7 @@ export const routes: Routes = [
       // All products  →  /productos
       {
         path: '',
-        loadComponent: () => ProductListComponent,
+        loadComponent: () =>  import('./pages/product-list/product-list.component').then(m => m.ProductListComponent),
         resolve: {seo: seoResolver},
         data: {
           seo: () => ({
@@ -57,7 +53,7 @@ export const routes: Routes = [
       // Product detail  →  /productos/ramo-primaveral-grande
       {
         path: ':route',
-        loadComponent: () =>ProductDetailComponent,
+        loadComponent: () =>import('./pages/product-detail/product-detail.component').then(m => m.ProductDetailComponent),
         resolve: {seo: productSeoResolver},
       }
     ]
@@ -75,14 +71,14 @@ export const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () =>ProductListComponent,
+            loadComponent: () =>import('./pages/product-list/product-list.component').then(m => m.ProductListComponent),
             resolve: {seo: categorySeoResolver},
           },
 
           {
             // Subcategory →  /categorias/rosas/rosas-rojas
             path: ':subCategoryRoute',
-            loadComponent: () =>ProductListComponent,
+            loadComponent: () =>import('./pages/product-list/product-list.component').then(m => m.ProductListComponent),
             resolve: {seo: subCategorySeoResolver},
           }
 
@@ -92,7 +88,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    component: NotFoundComponent,
+    loadComponent:()=> import('./pages/not-found/not-found.component').then(m => m.NotFoundComponent),
     resolve: {seo: seoResolver},
     data: {
       seo: () => ({
