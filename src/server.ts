@@ -50,11 +50,11 @@ app.use(
         'connect-src': isProduction
           ? [
             "'self'",
-            'https://backendflorist-production.up.railway.app',
+            'https://www.backendflorist-production.up.railway.app',
           ] : [
             "'self'",
             'http://localhost:8080',
-            'https://backendflorist-production.up.railway.app',
+            'https://www.backendflorist-production.up.railway.app',
           ],
 
         'frame-ancestors': ["'none'"],
