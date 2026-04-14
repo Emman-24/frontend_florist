@@ -3,7 +3,8 @@ name: Deploy Angular App to HostGator
 on:
   push:
     branches:
-      - main # Change this if your default branch is named 'master'
+      - master
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
