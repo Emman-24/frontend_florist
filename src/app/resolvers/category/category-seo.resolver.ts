@@ -41,7 +41,7 @@ export const categorySeoResolver: ResolveFn<void> = (route) => {
   const categoryService = inject(CategoryService);
   const metaService = inject(MetaService);
 
-  const categorySlug = route.paramMap.get('categoryRoute') ?? '';
+  const categorySlug = route.parent?.paramMap.get('categoryRoute') ?? route.paramMap.get('categoryRoute') ?? '';
   return categoryService.getCategories().pipe(
     take(1),
     map(tree => {
@@ -49,7 +49,7 @@ export const categorySeoResolver: ResolveFn<void> = (route) => {
       const cat = node?.category;
 
       const name = cat?.name ?? categorySlug;
-      const description = cat?.description ?? null;
+      const description = cat?.description?.trim() || null;
 
       const meta: PageMetadata = {
         title: `${name}`,
