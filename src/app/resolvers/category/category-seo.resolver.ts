@@ -84,7 +84,7 @@ export const subCategorySeoResolver: ResolveFn<void> = (route) => {
 
       const catName = parentNode?.category.name ?? catSlug;
       const subName = subNode?.category.name ?? subSlug;
-      const subDesc = subNode?.category.description ?? null;
+      const subDesc = subNode?.category.description?.trim() || null;
 
       const meta: PageMetadata = {
         title: `${subName} — ${catName}`,
