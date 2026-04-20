@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.floristeriaakasia.com.co/sitemap.xml
+
+Disallow: /api/
