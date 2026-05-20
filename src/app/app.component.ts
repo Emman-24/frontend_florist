@@ -9,7 +9,7 @@ import {filter, Subscription} from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CursorComponent, NavbarComponent, NavbarComponent, FooterComponent, LoaderComponent],
+  imports: [RouterOutlet, CursorComponent, NavbarComponent, FooterComponent, LoaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })

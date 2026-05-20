@@ -65,23 +65,18 @@
         </div>
 
 
-        <div class="detail-tabs">
-          <div class="detail-tab-headers">
-            <button class="detail-tab-btn" [class.active]="activeTab() === 'description'" (click)="activeTab.set('description')">Descripción</button>
-          </div>
-          <div class="detail-tab-content" [class.active]="activeTab() === 'description'">
-            <p>{{ product.description.description }}</p>
-          </div>
+        <div class="detail-tab-content active">
+          <p>{{ product.description.description }}</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="no-product" *ngIf="loading">
+  <div class="no-product" *ngIf="loading()">
     <p>Cargando producto...</p>
   </div>
 
-  <div class="no-product" *ngIf="error">
+  <div class="no-product" *ngIf="error()">
     <p>No se pudo cargar el producto.</p>
   </div>
 </div>

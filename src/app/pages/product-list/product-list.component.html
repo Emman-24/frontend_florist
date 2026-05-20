@@ -86,8 +86,15 @@
       </a>
     </div>
 
+    <!-- ── Error state ──────────────────────────────────────────────────── -->
+    <div class="products-empty" *ngIf="error()">
+      <div class="products-empty-icon" aria-hidden="true">✿</div>
+      <p class="products-empty-title">No se pudo cargar</p>
+      <p class="products-empty-desc">Hubo un problema al cargar los productos. Intenta de nuevo.</p>
+    </div>
+
     <!-- ── Empty state ─────────────────────────────────────────────────── -->
-    <div class="products-empty" *ngIf="!loading() && products.length === 0">
+    <div class="products-empty" *ngIf="!loading() && !error() && products.length === 0">
       <div class="products-empty-icon" aria-hidden="true">✿</div>
       <p class="products-empty-title">Sin flores por aquí</p>
       <p class="products-empty-desc">No encontramos productos en esta categoría.</p>

@@ -25,11 +25,10 @@ interface TagMetadata {
 export class ProductDetailComponent implements OnInit, OnDestroy {
 
   product: ProductDetail | null = null;
-  loading = true;
-  error = false;
+  loading = signal(true);
+  error = signal(false);
 
   selectedThumb = signal(0);
-  activeTab = signal<'description' | 'care' | 'delivery'>('description');
 
   private readonly route = inject(ActivatedRoute);
   private readonly productService = inject(ProductService);
@@ -83,19 +82,19 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.sub = this.route.paramMap.pipe(
       map(params => String(params.get('route'))),
       switchMap(id => {
-        this.loading = true;
-        this.error = false;
+        this.loading.set(true);
+        this.error.set(false);
         this.selectedThumb.set(0);
         return this.productService.getProductBySlug(id);
       })
     ).subscribe({
       next: response => {
         this.product = response.data;
-        this.loading = false;
+        this.loading.set(false);
       },
       error: () => {
-        this.error = true;
-        this.loading = false;
+        this.error.set(true);
+        this.loading.set(false);
       }
     });
   }

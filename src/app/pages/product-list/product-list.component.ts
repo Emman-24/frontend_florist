@@ -27,6 +27,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   totalElements = 0;
   totalPages = 0;
   loading = signal(false);
+  error = signal(false);
   currentPage = signal(0);
   readonly pageSize = 12;
   readonly skeletonItems = Array(this.pageSize).fill(null);
@@ -102,12 +103,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
         takeUntil(this.destroy$),
       )
-      .subscribe(response => {
-        this.products = response.content;
-        this.totalElements = response.totalElements;
-        this.totalPages = response.totalPages;
-        this.loading.set(false);
-        this.scrollToTop();
+      .subscribe({
+        next: response => {
+          this.products = response.content;
+          this.totalElements = response.totalElements;
+          this.totalPages = response.totalPages;
+          this.error.set(false);
+          this.loading.set(false);
+          this.scrollToTop();
+        },
+        error: () => {
+          this.error.set(true);
+          this.loading.set(false);
+        }
       });
   }
 

@@ -1,5 +1,6 @@
 import {Component, HostListener, inject, OnDestroy, OnInit, PLATFORM_ID, Renderer2, signal} from '@angular/core';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import {Subscription} from 'rxjs';
 import {CategoryService} from '../../services/category/category.service';
 import {CategoryNode} from '../../models/category';
 import {isPlatformBrowser} from '@angular/common';
@@ -24,6 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private backdropEl: HTMLElement | null = null;
   private savedScrollY = 0;
   private closeDropdownTimer: ReturnType<typeof setTimeout> | null = null;
+  private categorySub!: Subscription;
 
 
   scrolled     = signal(false);
@@ -35,12 +37,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe(nodes => {
+    this.categorySub = this.categoryService.getCategories().subscribe(nodes => {
       this.categories.set(nodes);
     });
   }
 
   ngOnDestroy(): void {
+    this.categorySub?.unsubscribe();
     this.clearCloseTimer();
     this.destroyBackdrop();
     this.unlockScroll();
