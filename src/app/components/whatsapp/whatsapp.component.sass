@@ -1,0 +1,102 @@
+$ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1)
+$ease-smooth: cubic-bezier(0.16, 1, 0.3, 1)
+
+.wa-fab
+  position: fixed
+  bottom: 28px
+  right: 28px
+  z-index: 9100
+  width: 56px
+  height: 56px
+  border-radius: 50%
+  background: #25D366
+  color: #fff
+  display: flex
+  align-items: center
+  justify-content: center
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), 0 1px 4px rgba(0, 0, 0, 0.1)
+  transition: transform 0.3s $ease-spring, box-shadow 0.3s $ease-smooth
+  animation: wa-enter 0.5s $ease-spring both
+
+  &::before,
+  &::after
+    content: ''
+    position: absolute
+    inset: 0
+    border-radius: 50%
+    background: #25D366
+    z-index: -1
+    pointer-events: none
+    opacity: 0
+    animation: wa-pulse 2.4s $ease-smooth 0.6s infinite
+
+  &::after
+    animation-delay: 1.8s
+
+  svg
+    position: relative
+    transform-origin: 50% 60%
+
+  @media (max-width: 768px)
+    bottom: 20px
+    right: 16px
+    width: 50px
+    height: 50px
+
+    svg
+      width: 24px
+      height: 24px
+
+  &:hover
+    transform: scale(1.1)
+    box-shadow: 0 8px 28px rgba(37, 211, 102, 0.45), 0 2px 8px rgba(0, 0, 0, 0.12)
+
+    svg
+      animation: wa-wiggle 0.6s $ease-spring
+
+    &::before,
+    &::after
+      animation-duration: 1.6s
+
+  &:active
+    transform: scale(0.96)
+
+  @media (prefers-reduced-motion: reduce)
+    animation: none
+
+    &::before,
+    &::after
+      display: none
+
+    svg
+      animation: none
+
+@keyframes wa-enter
+  from
+    transform: scale(0) rotate(-20deg)
+    opacity: 0
+  to
+    transform: scale(1) rotate(0deg)
+    opacity: 1
+
+@keyframes wa-pulse
+  0%
+    transform: scale(1)
+    opacity: 0.55
+  80%
+    opacity: 0
+  100%
+    transform: scale(1.9)
+    opacity: 0
+
+@keyframes wa-wiggle
+  0%, 100%
+    transform: rotate(0)
+  20%
+    transform: rotate(-14deg)
+  45%
+    transform: rotate(12deg)
+  70%
+    transform: rotate(-6deg)
+  85%
+    transform: rotate(3deg)

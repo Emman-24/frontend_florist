@@ -5,11 +5,12 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {LoaderComponent} from './components/loader/loader.component';
 import {filter, Subscription} from 'rxjs';
+import {WhatsappComponent} from './components/whatsapp/whatsapp.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CursorComponent, NavbarComponent, FooterComponent, LoaderComponent],
+  imports: [RouterOutlet, CursorComponent, NavbarComponent, FooterComponent, LoaderComponent, WhatsappComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.sass'
 })

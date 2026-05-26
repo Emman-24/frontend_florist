@@ -10,6 +10,7 @@ import {CategoryNode} from '../../models/category';
     RouterLink
   ],
   templateUrl: './footer.component.html',
+  standalone: true,
   styleUrl: './footer.component.sass'
 })
 export class FooterComponent implements OnInit, OnDestroy {
