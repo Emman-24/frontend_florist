@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private readonly renderer = inject(Renderer2);
 
   private backdropEl: HTMLElement | null = null;
+  private backdropUnlisten: (() => void) | null = null;
   private savedScrollY = 0;
   private closeDropdownTimer: ReturnType<typeof setTimeout> | null = null;
   private categorySub!: Subscription;
@@ -107,7 +108,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     const el = this.renderer.createElement('div') as HTMLElement;
     this.renderer.addClass(el, 'nav-body-backdrop');
-    this.renderer.listen(el, 'click', () => this.closeMenu());
+    this.backdropUnlisten = this.renderer.listen(el, 'click', () => this.closeMenu());
     this.renderer.appendChild(document.body, el);
     this.backdropEl = el;
 
@@ -118,6 +119,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   private destroyBackdrop(): void {
     if (!this.backdropEl) return;
+    this.backdropUnlisten?.();
+    this.backdropUnlisten = null;
     this.renderer.removeClass(this.backdropEl, 'nav-body-backdrop--visible');
     const el = this.backdropEl;
     this.backdropEl = null;
