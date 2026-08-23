@@ -15,7 +15,15 @@ const browserDistFolder = resolve(serverDistFolder, '../browser');
 
 const isProduction = process.env['NODE_ENV'] === 'production';
 const app = express();
-const angularApp = new AngularNodeAppEngine();
+const angularApp = new AngularNodeAppEngine({
+  allowedHosts: [
+    'floristeriaakasia.com.co',
+    '*.floristeriaakasia.com.co',
+    'localhost',
+    '127.0.0.1',
+    '[::1]'
+  ]
+});
 
 
 app.set('trust proxy', 1);
