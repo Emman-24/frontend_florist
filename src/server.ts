@@ -39,6 +39,10 @@ app.use(
           "'self'",
           "'unsafe-inline'",
         ],
+        'script-src-attr': [
+          "'self'",
+          "'unsafe-inline'",
+        ],
         'style-src': [
           "'self'",
           "'unsafe-inline'",
